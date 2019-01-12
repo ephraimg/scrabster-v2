@@ -1,10 +1,12 @@
 
 import { Injectable } from '@angular/core';
 
+import { UserService } from './user.service';
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor() {}
+  constructor(private _userService: UserService) {}
   public isAuthenticated(): boolean {
-    return false;
+    return this._userService.user !== null;
   }
 }

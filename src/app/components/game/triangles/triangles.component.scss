@@ -1,0 +1,54 @@
+/* sets styles for bonus squares including their triangles */
+.star {
+    font-size: 2rem;
+}
+.dws, .star {
+    border-color: pink;
+}
+.tws {
+    border-color: #ff4d4d;
+}
+.dls {
+    border-color: LightBlue;
+}
+.tls {
+    border-color: #6495ED; 
+}
+
+/*  
+for individual triangles
+forms shape via transparent borders
+*/
+
+.triangle {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    background-color: transparent;
+}
+.tri-l {
+    border-width: 0.2rem 0.5rem 0.2rem 0;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+}
+.tri-r {
+    border-width: 0.2rem 0 0.2rem 0.5rem;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+}
+.tri-t {
+    float: left;
+    border-width: 0 0.2rem 0.5rem 0.2rem;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    border-left-color: transparent;
+}
+.tri-b {
+    float: left;
+    border-width: 0.5rem 0.2rem 0 0.2rem;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+    border-left-color: transparent;
+}
