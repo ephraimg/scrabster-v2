@@ -30,7 +30,7 @@
     [count]="triangleCount">
   </app-triangles>
 
-  <app-tile *ngIf="square && square.tile" [selectedTile]="selectedTile"></app-tile>
+  <app-tile *ngIf="square && square.tile" [tile]="square.tile" [selectedTile]="selectedTile"></app-tile>
 
   <div *ngIf="square && !square.tile && square.bonus === 'star'">&#x02605;</div>
   <div *ngIf="square && !square.tile && square.bonus !== 'star'" [ngClass]="'bonus-message'">

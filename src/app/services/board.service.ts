@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BonusService } from './bonus.service';
 import { Board, Square } from '../interfaces/interfaces';
+import { mockBoard } from '../../mock-data';
 
 @Injectable({
   providedIn: 'root'
@@ -9,12 +10,8 @@ export class BoardService {
 
   private squares: Square[][];
 
-  constructor(bonusService: BonusService) {
-    this.squares = Array(15).fill(null).map((wholeRow, row) => {
-        return Array(15).fill(null).map((sqInRow, col) => {
-            return { row, col, bonus: bonusService.getBonus(row, col), tile: null };
-        });
-    });
+  constructor(private bonusService: BonusService) {
+    this.squares = mockBoard.squares;
   }
 
   getSquare(row, col) {
@@ -28,6 +25,15 @@ export class BoardService {
 
   removeTile(tile, row, col) {
       this.squares[row][col].tile = null;
+  }
+
+  create() {
+    const sqArr = Array(15).fill(null).map((wholeRow, row) => {
+        return Array(15).fill(null).map((sqInRow, col) => {
+            return { row, col, bonus: this.bonusService.getBonus(row, col), tile: null };
+        });
+    });
+    return { squares: sqArr }
   }
 
   display() {

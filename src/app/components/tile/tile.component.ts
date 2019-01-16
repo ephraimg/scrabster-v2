@@ -19,7 +19,6 @@ export default class TileComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.tile);
     const randomRotation = Math.random() * 0.1 * (Math.random() > 0.5 ? 1 : -1);
     const rotation = this.inLogo ? randomRotation : 0;
     this.rotationStyle = {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from './services/user.service';
+import { DataService } from './services/data.service';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +10,11 @@ export class AppComponent implements OnInit {
 
   title = 'scrabster-v2';
   
-  constructor(private _userService: UserService) {};
+  constructor(private dataService: DataService) {};
 
   ngOnInit() {
-    this._userService.getUser()
+    this.dataService.fetchUser();
+    this.dataService.fetchGame();
   }
 
 }

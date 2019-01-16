@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
-import { UserService } from '../../services/user.service';
+import { GameService } from '../../services/game.service';
+import { DataService } from '../../services/data.service';
+import { User, Game } from '../../interfaces/interfaces';
+import { mockUser1, mockUser2, mockUser3, mockGame } from '../../../mock-data';
 
 @Component({
   selector: 'app-home',
@@ -9,22 +11,22 @@ import { UserService } from '../../services/user.service';
 })
 export class HomeComponent implements OnInit {
 
-  user;
-  games;
-  opponents;
+  games: Game[];
+  opponents: User[];
 
-  constructor(private _userService: UserService) { }
+  constructor(
+    private dataService: DataService,
+    private gameService: GameService,
+  ) {}
 
   ngOnInit() {
-    this.user = this._userService.getUser();
-    this.games = [
-      { id: 1 },
-      { id: 2 },
-    ];
-    this.opponents = [
-      { id: 325821 },
-      { id: 902525 },
-    ];
+    this.games = [mockGame];
+    this.opponents = [mockUser1, mockUser2, mockUser3];
+  }
+
+  startNewGame(players: User[]) {
+    const newGame: Game = this.gameService.create(players);
+    this.dataService.setNewGame(newGame);
   }
 
 }

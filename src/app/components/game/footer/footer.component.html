@@ -1,0 +1,40 @@
+
+
+<mat-card class="footer fixed">
+  <div class="ui-rack">
+      <app-tile
+        *ngFor="let tile of gameService.currentPlayer.rack"
+        [tile]="tile"
+      ></app-tile>
+  </div>
+  <div class="button-row">
+    <button mat-stroked-button>
+        Shuffle Tiles
+    </button>
+    <button mat-stroked-button>
+        Exchange Tile
+    </button>
+    <button mat-stroked-button>
+        Clear Play
+    </button>
+    <button mat-stroked-button class="submit">
+        Submit Play
+    </button>
+  </div>
+</mat-card>
+
+<mat-card class="info-bar with-fixed-footer">
+  <div class="banner-info">
+    <div>
+      Turn {{gameService.currentTurn}} ({{gameService.currentPlayer.user.name}})
+      <br />
+      Pending score:
+    </div>
+    <br />
+    <br />
+    <div>
+      {{gameService.game.players[0].user.name}}'s total: {{gameService.game.players[0].score}}
+      <br/>{{gameService.game.players[1].user.name}}'s total: {{gameService.game.players[1].score}}
+    </div>
+  </div>
+</mat-card>
