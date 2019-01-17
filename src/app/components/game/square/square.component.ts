@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { GameService } from '../../../services/game.service';
 import { Tile, Square } from 'src/app/interfaces/interfaces';
 
 const bonusMessages = {
@@ -31,7 +32,7 @@ export class SquareComponent implements OnInit {
   bonusWords: string[];
   triangleCount: number;
 
-  constructor() {
+  constructor(public gameService: GameService) {
   }
 
   ngOnInit() {
@@ -41,6 +42,10 @@ export class SquareComponent implements OnInit {
     if (this.square && (this.square.bonus === 'star')) {
       this.bonusClass = (this.square && this.square.tile) ? 'dws' : 'star';
     }
+  }
+
+  handleClick() {
+    this.gameService.selectSquareOrRack(this.square);
   }
 
 }

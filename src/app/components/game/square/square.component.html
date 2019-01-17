@@ -1,5 +1,8 @@
 
-<div [ngClass]="['ui-square', 'noselect', bonusClass]">
+<div
+  [ngClass]="['ui-square', 'noselect', bonusClass]"
+  (click)="handleClick()"
+>
 
   <app-triangles
     *ngIf="triangleCount > 0"
@@ -30,7 +33,7 @@
     [count]="triangleCount">
   </app-triangles>
 
-  <app-tile *ngIf="square && square.tile" [tile]="square.tile" [selectedTile]="selectedTile"></app-tile>
+  <app-tile *ngIf="square && square.tile" [tile]="square.tile"></app-tile>
 
   <div *ngIf="square && !square.tile && square.bonus === 'star'">&#x02605;</div>
   <div *ngIf="square && !square.tile && square.bonus !== 'star'" [ngClass]="'bonus-message'">

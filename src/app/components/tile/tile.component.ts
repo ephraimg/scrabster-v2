@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { GameService } from '../../services/game.service';
+import { UserService } from '../../services/user.service';
 import { Tile } from 'src/app/interfaces/interfaces';
 
 @Component({
@@ -10,13 +12,14 @@ export default class TileComponent implements OnInit {
 
   @Input() inLogo: boolean = false;
   @Input() tile: Tile;
-  @Input() selectedTile: Tile;
 
   rotationStyle: { [key: string]: string };
-  selectClass: string;
   logoClass: string;
 
-  constructor() { }
+  constructor(
+    private userService: UserService,
+    private gameService: GameService
+  ) { }
 
   ngOnInit() {
     const randomRotation = Math.random() * 0.1 * (Math.random() > 0.5 ? 1 : -1);
@@ -26,8 +29,15 @@ export default class TileComponent implements OnInit {
       msTransform: `rotate(${rotation}turn)`,
       WebkitTransform: `rotate(${rotation}turn)`
     }
-    this.selectClass = this.selectedTile && this.selectedTile.id === this.tile.id ? 'selected' : '';
     this.logoClass = this.inLogo ? 'logo-tile' : '';
   }
 
+  handleClick($event) {
+    this.gameService.selectTile($event, this.tile);
+  }
+
+  get selectClass() {
+    return this.gameService.selectedTile && this.gameService.selectedTile.id === this.tile.id ? 'selected' : '';
+  }
+  
 }

@@ -32,7 +32,16 @@
         z-index: 999;
         width: 100%;
         background-color: white;
-        padding: 1rem;
+        padding: 0.5rem;
+        box-shadow: 0 -1rem 0.5rem -1rem gray;
+        -webkit-box-shadow: 0 -1rem 0.5rem -1rem gray;
+        -moz-box-shadow: 0 -1rem 0.5rem -1rem gray;
+        .ui-rack {
+            margin: 0 auto 0.5rem;
+        }
+        button {
+            margin: auto 0.5rem;
+        }
     }
 }
 
@@ -50,7 +59,7 @@
     width: 100%;
     text-align: center;
     button {
-        margin: auto 0.5rem;
+        margin: auto 0.25rem;
     }
 }
 

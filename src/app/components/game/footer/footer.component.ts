@@ -8,9 +8,13 @@ import { GameService } from '../../../services/game.service';
 })
 export class FooterComponent implements OnInit {
 
-  constructor(public gameService: GameService) { }
+  constructor(private gameService: GameService) { }
 
   ngOnInit() {
+  }
+
+  handleClick() {
+    this.gameService.selectSquareOrRack(null);
   }
 
 }

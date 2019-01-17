@@ -1,6 +1,6 @@
 
 
-<mat-card class="footer fixed">
+<mat-card class="footer fixed" (click)="handleClick()">
   <div class="ui-rack">
       <app-tile
         *ngFor="let tile of gameService.currentPlayer.rack"

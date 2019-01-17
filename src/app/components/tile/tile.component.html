@@ -2,6 +2,7 @@
 <div 
   [ngClass]="['ui-tile', 'noselect', selectClass, logoClass]"
   [ngStyle]="style"
+  (click)="handleClick($event)"
 >
   <app-letter>{{tile.letter}}</app-letter>
   <app-points>{{tile.points}}</app-points>

@@ -21,10 +21,12 @@ export class BoardService {
 
   placeTile(tile, row, col) {
       this.squares[row][col].tile = tile;
+      return true;
   }
 
   removeTile(tile, row, col) {
       this.squares[row][col].tile = null;
+      return true;
   }
 
   create() {
