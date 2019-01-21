@@ -14,7 +14,6 @@ export class BoardComponent {
 
   constructor(boardService: BoardService) {
     this.boardService = boardService;
-    console.log(boardService);
   }
 
 }

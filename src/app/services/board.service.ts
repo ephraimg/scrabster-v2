@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BonusService } from './bonus.service';
+import { DataService } from './data.service';
 import { Board, Square } from '../interfaces/interfaces';
 import { mockBoard } from '../../mock-data';
 
@@ -8,42 +9,49 @@ import { mockBoard } from '../../mock-data';
 })
 export class BoardService {
 
-  private squares: Square[][];
+    private squares: Square[][];
 
-  constructor(private bonusService: BonusService) {
-    this.squares = mockBoard.squares;
-  }
+    constructor(
+        private bonusService: BonusService,
+        private dataService: DataService
+    ) {
+        this.squares = this.dataService.game.board.squares;
+    }
 
-  getSquare(row, col) {
-      if (!this.squares[row]) { return undefined; }
-      return this.squares[row][col];
-  }
+    get board() {
+        return this.squares;
+    }
 
-  placeTile(tile, row, col) {
-      this.squares[row][col].tile = tile;
-      return true;
-  }
+    getSquare(row, col) {
+        if (!this.squares[row]) { return undefined; }
+        return this.squares[row][col];
+    }
 
-  removeTile(tile, row, col) {
-      this.squares[row][col].tile = null;
-      return true;
-  }
+    placeTile(tile, row, col) {
+        this.squares[row][col].tile = tile;
+        return true;
+    }
 
-  create() {
-    const sqArr = Array(15).fill(null).map((wholeRow, row) => {
-        return Array(15).fill(null).map((sqInRow, col) => {
-            return { row, col, bonus: this.bonusService.getBonus(row, col), tile: null };
+    removeTile(tile, row, col) {
+        this.squares[row][col].tile = null;
+        return true;
+    }
+
+    create() {
+        const sqArr = Array(15).fill(null).map((wholeRow, row) => {
+            return Array(15).fill(null).map((sqInRow, col) => {
+                return { row, col, bonus: this.bonusService.getBonus(row, col), tile: null };
+            });
         });
-    });
-    return { squares: sqArr }
-  }
+        return { squares: sqArr }
+    }
 
-  display() {
-      const disp = this.squares.map(row => {
-          return row.map(sq => sq.tile ? `[${sq.tile.letter}]` : '[ ]').join(' ');
-      })
-      console.log('\nCurrent board:\n');
-      console.log(disp.join('\n\n'));
-  }
+    display() {
+        const disp = this.squares.map(row => {
+            return row.map(sq => sq.tile ? `[${sq.tile.letter}]` : '[ ]').join(' ');
+        })
+        console.log('\nCurrent board:\n');
+        console.log(disp.join('\n\n'));
+    }
 
 }

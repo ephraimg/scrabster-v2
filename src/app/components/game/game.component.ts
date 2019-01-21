@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component } from '@angular/core';
+import { GameService } from '../../services/game.service';
 @Component({
-  selector: 'app-game',
-  templateUrl: './game.component.html',
-  styleUrls: ['./game.component.scss']
+    selector: 'app-game',
+    templateUrl: './game.component.html',
+    styleUrls: ['./game.component.scss']
 })
-export class GameComponent implements OnInit {
+export class GameComponent {
 
-  constructor(
-  ) {}
+    constructor(
+        private gameService: GameService
+    ) {}
 
-  ngOnInit() {}
+    toggleFooter() {
+        this.gameService.toggleFooter();
+    }
+
+    get isFooterFixed() {
+        return this.gameService.isFooterFixed;
+    }
 
 }

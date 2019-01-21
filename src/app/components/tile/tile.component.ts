@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { GameService } from '../../services/game.service';
-import { UserService } from '../../services/user.service';
 import { Tile } from 'src/app/interfaces/interfaces';
 
 @Component({
@@ -17,7 +16,6 @@ export default class TileComponent implements OnInit {
   logoClass: string;
 
   constructor(
-    private userService: UserService,
     private gameService: GameService
   ) { }
 

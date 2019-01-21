@@ -1,24 +1,28 @@
 
 
-<mat-card class="footer fixed" (click)="handleClick()">
+<mat-card [ngClass]="['footer', gameService.isFooterFixed ? 'fixed' : '']" (click)="handleFooterClick()">
+  <!-- <button mat-mini-fab color="accent" class="fix-footer-button" (click)="toggleFooter()">
+    <span *ngIf="!isFooterFixed">&#x0225A;</span>
+    <span *ngIf="isFooterFixed">&#x02259;</span>
+  </button> -->
   <div class="ui-rack">
       <app-tile
-        *ngFor="let tile of gameService.currentPlayer.rack"
+        *ngFor="let tile of gameService.rack"
         [tile]="tile"
       ></app-tile>
   </div>
   <div class="button-row">
-    <button mat-stroked-button>
-        Shuffle Tiles
+    <button mat-stroked-button (click)="shuffle($event)">
+        Shuffle
     </button>
-    <button mat-stroked-button>
-        Exchange Tile
+    <button mat-stroked-button *ngIf="gameService.isCurrentPlayerUser()" (click)="clear($event)">
+      Clear
     </button>
-    <button mat-stroked-button>
-        Clear Play
+    <button mat-stroked-button *ngIf="gameService.isCurrentPlayerUser()" (click)="exchange($event)">
+        Trade
     </button>
-    <button mat-stroked-button class="submit">
-        Submit Play
+    <button mat-stroked-button *ngIf="gameService.isCurrentPlayerUser()" class="submit" (click)="submit($event)">
+        Submit
     </button>
   </div>
 </mat-card>
@@ -26,15 +30,15 @@
 <mat-card class="info-bar with-fixed-footer">
   <div class="banner-info">
     <div>
-      Turn {{gameService.currentTurn}} ({{gameService.currentPlayer.user.name}})
-      <br />
-      Pending score:
+      Turn {{gameService.currentTurn}} ({{gameService.player.user.name}})
+    </div>
+    <div *ngIf="gameService.isCurrentPlayerUser()">
+      Pending score: {{pendingScore}}
     </div>
     <br />
     <br />
-    <div>
-      {{gameService.game.players[0].user.name}}'s total: {{gameService.game.players[0].score}}
-      <br/>{{gameService.game.players[1].user.name}}'s total: {{gameService.game.players[1].score}}
+    <div *ngFor="let player of gameService.players">
+      {{player.user.name}}'s total: {{player.score}}
     </div>
   </div>
 </mat-card>

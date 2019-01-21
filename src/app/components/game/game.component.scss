@@ -13,14 +13,44 @@ mat-sidenav-content {
 
 mat-sidenav {
     width: 20rem;
+    padding: 5rem 2rem;
 }
 
 app-header {
     flex: 1;
+    @media screen and (max-width: 599px) {
+        display: none;
+    }
 }
 
-button {
+.sidenav-button-inner, .sidenav-button-outer {
+    z-index: 999;
+    top: 1rem;
+    font-size: 2rem;
+    padding: 0;
+    box-sizing: border-box;
+    span {
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
+    }
+}
+
+.sidenav-button-inner {
     position: absolute;
-    top: 2rem;
-    left: 0;
+    right: 1rem;
+    span {
+        display: inline-block;
+        transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
+    }
+}
+
+.sidenav-button-outer {
+    position: fixed;
+    left: 1rem;
 }

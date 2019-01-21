@@ -2,7 +2,9 @@
 <mat-sidenav-container>
 
   <mat-sidenav-content>
-    <button (click)="sidenav.toggle()">sidenav toggle</button>
+    <button mat-mini-fab color="accent" class="sidenav-button-outer" (click)="sidenav.toggle()">
+      <span>&#x02259;</span>
+    </button>
     <app-header></app-header>
     <mat-card>
       <app-board></app-board>
@@ -10,11 +12,26 @@
     <app-footer></app-footer>
   </mat-sidenav-content>
 
-  <mat-sidenav #sidenav mode="push" closed>
-    <p>
-      sidebar
-        works!
-    </p>
+  <mat-sidenav #sidenav mode="over" fixedInViewport="true" closed>
+    <div>
+        <a href="">Home</a>
+    </div>
+    <div>
+        <a href="">Rules</a>
+    </div>
+    <div>
+        <a href="">Statistics</a>
+    </div>
+    <div>
+        <h2>Settings</h2>
+        <button mat-raised-button (click)="toggleFooter()">
+            <span *ngIf="isFooterFixed">Detach tile rack</span>
+            <span *ngIf="!isFooterFixed">Attach tile rack</span>
+        </button>
+    </div>
+    <button mat-mini-fab color="accent" class="sidenav-button-inner" (click)="sidenav.toggle()">
+      <span>&#x0225A;</span>
+    </button>
   </mat-sidenav>
 
 </mat-sidenav-container>

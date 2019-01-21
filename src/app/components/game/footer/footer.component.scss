@@ -22,14 +22,11 @@
     box-sizing: border-box;
     width: 36rem;
     padding: 2rem;
-    button {
-        flex: 1;
-    }
 
     &.fixed {
         position: fixed;
         bottom: 0;
-        z-index: 999;
+        z-index: 950;
         width: 100%;
         background-color: white;
         padding: 0.5rem;
@@ -39,9 +36,33 @@
         .ui-rack {
             margin: 0 auto 0.5rem;
         }
-        button {
-            margin: auto 0.5rem;
+    }
+
+    @media screen and (max-width: 599px) {
+        position: fixed;
+        bottom: 0;
+        z-index: 950;
+        width: 100%;
+        background-color: white;
+        padding: 0.5rem;
+        box-shadow: 0 -1rem 0.5rem -1rem gray;
+        -webkit-box-shadow: 0 -1rem 0.5rem -1rem gray;
+        -moz-box-shadow: 0 -1rem 0.5rem -1rem gray;
+        .ui-rack {
+            margin: 0 auto 0.5rem;
         }
+    }
+
+}
+
+.fix-footer-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2rem;
+    box-sizing: border-box;
+    @media screen and (max-width: 599px) {
+        display: none;
     }
 }
 
@@ -60,6 +81,9 @@
     text-align: center;
     button {
         margin: auto 0.25rem;
+        div {
+            padding: 0 !important;
+        }
     }
 }
 
