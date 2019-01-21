@@ -36,6 +36,21 @@ export class FooterComponent {
     this.gameService.submitPlay();
   }
 
+  get isSubmitDisabled() {
+    if (!this.gameService.isCurrentPlayerUser()) {
+        return true;
+    }
+    if (this.playService.tilesToExchange.length > 0) {
+        return false;
+    }
+    if (this.playService.placements.length > 0 && 
+        this.playValidationService.isValid(this.gameService.play)
+    ) {
+        return false;
+    }
+    return true;
+  }
+
   get pendingScore() {
       if (this.playService.placements.length < 1) {
           return 'Waiting... (no tiles placed or exchanged yet)';

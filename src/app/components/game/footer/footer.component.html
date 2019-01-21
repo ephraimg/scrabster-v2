@@ -12,16 +12,38 @@
       ></app-tile>
   </div>
   <div class="button-row">
-    <button mat-stroked-button (click)="shuffle($event)">
+    <button
+        mat-stroked-button
+        class="compact"
+        (click)="shuffle($event)"
+    >
         Shuffle
     </button>
-    <button mat-stroked-button *ngIf="gameService.isCurrentPlayerUser()" (click)="clear($event)">
+    <button
+        mat-stroked-button
+        class="compact"
+        [class.disabled]="!gameService.isCurrentPlayerUser()"
+        [disabled]="!gameService.isCurrentPlayerUser()"
+        (click)="clear($event)"
+    >
       Clear
     </button>
-    <button mat-stroked-button *ngIf="gameService.isCurrentPlayerUser()" (click)="exchange($event)">
+    <button
+        mat-stroked-button
+        class="compact"
+        [class.disabled]="!gameService.isCurrentPlayerUser()"
+        [disabled]="!gameService.isCurrentPlayerUser()"
+        (click)="exchange($event)"
+    >
         Trade
     </button>
-    <button mat-stroked-button *ngIf="gameService.isCurrentPlayerUser()" class="submit" (click)="submit($event)">
+    <button
+        mat-stroked-button
+        class="compact submit"
+        [class.disabled]="isSubmitDisabled"
+        [disabled]="isSubmitDisabled"
+        (click)="submit($event)"
+        >
         Submit
     </button>
   </div>
