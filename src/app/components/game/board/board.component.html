@@ -8,6 +8,12 @@
         [id]="'square-' + i + '-' + j"
         [selectedTile]="selectedTile"
         [square]="boardService.getSquare(i, j)"
-    >
-    </app-square>
+
+
+        cdkDropList
+        (cdkDropListDropped)="gameService.drop($event, boardService.getSquare(i, j))"
+        (cdkDropListConnectedTo)="gameService.allDropLists"
+
+    ></app-square>
+  </div>
 </div>

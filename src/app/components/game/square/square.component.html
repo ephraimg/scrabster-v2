@@ -1,43 +1,45 @@
 
+<div cdkDrag>{{item}}</div>
+
 <div
   [ngClass]="['ui-square', 'noselect', bonusClass]"
   (click)="handleClick()"
 >
 
-  <app-triangles
-    *ngIf="triangleCount > 0"
-    class="tris tris-t tris-tb"
-    [side]="'t'"
-    [bonusClass]="bonusClass"
-    [count]="triangleCount">
-  </app-triangles>
-  <app-triangles
-    *ngIf="triangleCount > 0"
-    class="tris tris-r tris-lr"
-    [side]="'r'"
-    [bonusClass]="bonusClass"
-    [count]="triangleCount">
-  </app-triangles>
-  <app-triangles
-    *ngIf="triangleCount > 0"
-    class="tris tris-b tris-tb"
-    [side]="'b'"
-    [bonusClass]="bonusClass"
-    [count]="triangleCount">
-  </app-triangles>
-  <app-triangles
-    *ngIf="triangleCount > 0"
-    class="tris tris-l tris-lr"
-    [side]="'l'"
-    [bonusClass]="bonusClass"
-    [count]="triangleCount">
-  </app-triangles>
+    <app-triangles
+        *ngIf="triangleCount > 0"
+        class="tris tris-t tris-tb"
+        [side]="'t'"
+        [bonusClass]="bonusClass"
+        [count]="triangleCount">
+    </app-triangles>
+    <app-triangles
+        *ngIf="triangleCount > 0"
+        class="tris tris-r tris-lr"
+        [side]="'r'"
+        [bonusClass]="bonusClass"
+        [count]="triangleCount">
+    </app-triangles>
+    <app-triangles
+        *ngIf="triangleCount > 0"
+        class="tris tris-b tris-tb"
+        [side]="'b'"
+        [bonusClass]="bonusClass"
+        [count]="triangleCount">
+    </app-triangles>
+    <app-triangles
+        *ngIf="triangleCount > 0"
+        class="tris tris-l tris-lr"
+        [side]="'l'"
+        [bonusClass]="bonusClass"
+        [count]="triangleCount">
+    </app-triangles>
 
-  <app-tile *ngIf="square && square.tile" [tile]="square.tile"></app-tile>
+    <app-tile *ngIf="square && square.tile" [tile]="square.tile"></app-tile>
 
-  <div *ngIf="square && !square.tile && square.bonus === 'star'">&#x02605;</div>
-  <div *ngIf="square && !square.tile && square.bonus !== 'star'" [ngClass]="'bonus-message'">
-    <div *ngFor="let word of bonusWords">{{word}}</div>
-  </div>
+    <div *ngIf="square && !square.tile && square.bonus === 'star'">&#x02605;</div>
+    <div *ngIf="square && !square.tile && square.bonus !== 'star'" [ngClass]="'bonus-message'">
+        <div *ngFor="let word of bonusWords">{{word}}</div>
+    </div>
 
 </div>

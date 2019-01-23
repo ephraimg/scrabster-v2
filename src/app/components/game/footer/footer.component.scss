@@ -106,3 +106,9 @@
     justify-content: space-around;
     background-color: lightBlue;
 }
+
+// This styles the element in drag-start location
+.cdk-drag-placeholder {
+    opacity: 0.4;
+    transition: transform 200ms ease;
+}

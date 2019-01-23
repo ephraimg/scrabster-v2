@@ -1,12 +1,20 @@
 
-
 <mat-card [ngClass]="['footer', gameService.isFooterFixed ? 'fixed' : '']" (click)="handleFooterClick()">
   <!-- <button mat-mini-fab color="accent" class="fix-footer-button" (click)="toggleFooter()">
     <span *ngIf="!isFooterFixed">&#x0225A;</span>
     <span *ngIf="isFooterFixed">&#x02259;</span>
   </button> -->
-  <div class="ui-rack">
+  <div
+    cdkDropList
+    (cdkDropListDropped)="gameService.drop($event)"
+    [cdkDropListConnectedTo]="gameService.allDropLists"
+    [cdkDropListData]="gameService.rack"
+    [id]="'testid'"
+    class="ui-rack"
+  >
       <app-tile
+        cdkDrag
+        (cdkDragStarted)="gameService.dragStarted($event, tile)"
         *ngFor="let tile of gameService.rack"
         [tile]="tile"
       ></app-tile>
