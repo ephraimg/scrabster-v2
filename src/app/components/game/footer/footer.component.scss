@@ -26,6 +26,7 @@
     &.fixed {
         position: fixed;
         bottom: 0;
+        left: 0;
         z-index: 950;
         width: 100%;
         background-color: white;
@@ -39,20 +40,8 @@
     }
 
     @media screen and (max-width: 599px) {
-        position: fixed;
-        bottom: 0;
-        z-index: 950;
         width: 100%;
-        background-color: white;
-        padding: 0.5rem;
-        box-shadow: 0 -1rem 0.5rem -1rem gray;
-        -webkit-box-shadow: 0 -1rem 0.5rem -1rem gray;
-        -moz-box-shadow: 0 -1rem 0.5rem -1rem gray;
-        .ui-rack {
-            margin: 0 auto 0.5rem;
-        }
     }
-
 }
 
 .fix-footer-button {
@@ -104,6 +93,9 @@
     margin: 2rem auto 0;
     &.with-fixed-footer {
         margin: 0 auto 10rem;
+    }
+    @media screen and (max-width: 599px) {
+        width: 100%;
     }
 }
 

@@ -6,9 +6,12 @@ mat-sidenav-container {
 mat-sidenav-content {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     margin: auto;
+    @media screen and (max-width: 599px) {
+        align-items: flex-start;
+    }
 }
 
 mat-sidenav {

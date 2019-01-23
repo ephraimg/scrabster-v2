@@ -61,6 +61,9 @@ html, body {
     font-weight: 400;
     text-decoration: none;
     font-size: 14px;
+    @media screen and (max-width: 599px) {
+        font-size: 12px;
+    }
 }
 
 body {

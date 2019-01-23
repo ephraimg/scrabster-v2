@@ -1,15 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GameService } from '../../services/game.service';
 @Component({
     selector: 'app-game',
     templateUrl: './game.component.html',
     styleUrls: ['./game.component.scss']
 })
-export class GameComponent {
+export class GameComponent implements OnInit {
 
-    constructor(
-        private gameService: GameService
-    ) {}
+    windowWidth: number;
+
+    constructor(private gameService: GameService) {}
+
+    ngOnInit() {
+        this.windowWidth = window.innerWidth;
+    }
 
     toggleFooter() {
         this.gameService.toggleFooter();

@@ -4,9 +4,11 @@
     margin: 2rem auto;
     box-sizing: border-box;
     width: 46rem;
-    position: relative;
-    left: 0;
-    right: 0;
+    @media screen and (max-width: 599px) {
+        position: relative;
+        left: 0;
+        right: 0;
+    }
 }
 .ui-row {
     height: 3rem;

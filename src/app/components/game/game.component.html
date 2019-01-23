@@ -2,13 +2,20 @@
 <mat-sidenav-container>
 
   <mat-sidenav-content>
-    <button mat-mini-fab color="accent" class="sidenav-button-outer" (click)="sidenav.toggle()">
+    <button
+        cdkDrag
+        mat-mini-fab
+        color="accent"
+        class="sidenav-button-outer" 
+        (click)="sidenav.toggle()"
+    >
       <span>&#x02259;</span>
     </button>
     <app-header></app-header>
-    <mat-card>
+    <mat-card *ngIf="windowWidth >= 600">
       <app-board></app-board>
     </mat-card>
+    <app-board *ngIf="windowWidth < 600"></app-board>
     <app-footer></app-footer>
   </mat-sidenav-content>
 

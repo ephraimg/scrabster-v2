@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BoardService } from 'src/app/services/board.service';
+import { GameService } from 'src/app/services/game.service';
 
 @Component({
   selector: 'app-board',
@@ -8,12 +9,11 @@ import { BoardService } from 'src/app/services/board.service';
 })
 export class BoardComponent {
 
-  arrayOf15 = Array(15).fill(null);
+    arrayOf15 = Array(15).fill(null);
 
-  boardService: BoardService;
-
-  constructor(boardService: BoardService) {
-    this.boardService = boardService;
-  }
+    constructor(
+        public boardService: BoardService,
+        public gameService: GameService
+    ) {}
 
 }
