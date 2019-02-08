@@ -22,14 +22,14 @@
   <mat-sidenav #sidenav mode="over" fixedInViewport="true" autoFocus="false" closed>
     <div class="inset-card">
         <h1>Navigation</h1>
-        <button mat-raised-button href="">Home</button>
-        <button mat-raised-button href="">Rules</button>
-        <button mat-raised-button href="">Statistics</button>
+        <button mat-raised-button routerLink="/home" routerLinkActive="active">Home</button>
+        <button mat-raised-button routerLink="/rules">Rules</button>
+        <button mat-raised-button routerLink="/statistics">Statistics</button>
     </div>
     <div class="inset-card">
         <h1>Settings</h1>
         <mat-slide-toggle (change)="toggleFooter()">Dock tile rack</mat-slide-toggle>
-        <mat-slide-toggle >Email notifications</mat-slide-toggle>
+        <mat-slide-toggle (change)="toggleEmailNotifications()">Email notifications</mat-slide-toggle>
     </div>
     <button mat-mini-fab color="accent" class="sidenav-button-inner" (click)="sidenav.toggle()">
       <span>&#x0225A;</span>

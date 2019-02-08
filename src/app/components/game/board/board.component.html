@@ -1,13 +1,13 @@
 
 <div
-*ngFor="let rowNum of arrayOf15; index as i;"
-[ngClass]="'ui-row'"
+    *ngFor="let rowNum of arrayOf15; index as i;"
+    [ngClass]="'ui-row'"
 >
-<app-square
-    *ngFor="let square of arrayOf15; index as j;"
-    [id]="'square-' + i + '-' + j"
-    [selectedTile]="selectedTile"
-    [square]="boardService.getSquare(i, j)"
->
-</app-square>
+    <app-square
+        *ngFor="let square of arrayOf15; index as j;"
+        [id]="'square-' + i + '-' + j"
+        [selectedTile]="selectedTile"
+        [square]="boardService.getSquare(i, j)"
+    >
+    </app-square>
 </div>

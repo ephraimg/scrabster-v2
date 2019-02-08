@@ -12,6 +12,8 @@ import { LoginComponent } from './components/login/login.component';
 import TileComponent from './components/tile/tile.component';
 import GameModule from './components/game/game.module';
 import TileModule from './components/tile/tile.module';
+import { RulesComponent } from './components/rules/rules.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
 // import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 
 @NgModule({
@@ -19,6 +21,8 @@ import TileModule from './components/tile/tile.module';
     AppComponent,
     HomeComponent,
     LoginComponent,
+    RulesComponent,
+    StatisticsComponent,
   ],
   imports: [
     TileModule,

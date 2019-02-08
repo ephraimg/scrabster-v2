@@ -19,6 +19,10 @@ export class GameComponent implements OnInit {
         this.gameService.toggleFooter();
     }
 
+    toggleEmailNotifications() {
+        console.log('Toggled email notifications');
+    }
+
     get isFooterFixed() {
         return this.gameService.isFooterFixed;
     }
