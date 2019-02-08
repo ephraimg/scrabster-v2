@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import TileModule from 'src/app/components/tile/tile.module';
 import HeaderModule from '../header/header.module';
@@ -26,6 +27,7 @@ import { FooterComponent } from './footer/footer.component';
     MatSidenavModule,
     MatCardModule,
     MatButtonModule,
+    MatSlideToggleModule,
     HeaderModule,
     TileModule,
   ],

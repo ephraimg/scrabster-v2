@@ -19,22 +19,17 @@
     <app-footer></app-footer>
   </mat-sidenav-content>
 
-  <mat-sidenav #sidenav mode="over" fixedInViewport="true" closed>
-    <div>
-        <a href="">Home</a>
+  <mat-sidenav #sidenav mode="over" fixedInViewport="true" autoFocus="false" closed>
+    <div class="inset-card">
+        <h1>Navigation</h1>
+        <button mat-raised-button href="">Home</button>
+        <button mat-raised-button href="">Rules</button>
+        <button mat-raised-button href="">Statistics</button>
     </div>
-    <div>
-        <a href="">Rules</a>
-    </div>
-    <div>
-        <a href="">Statistics</a>
-    </div>
-    <div>
-        <h2>Settings</h2>
-        <button mat-raised-button (click)="toggleFooter()">
-            <span *ngIf="isFooterFixed">Detach tile rack</span>
-            <span *ngIf="!isFooterFixed">Attach tile rack</span>
-        </button>
+    <div class="inset-card">
+        <h1>Settings</h1>
+        <mat-slide-toggle (change)="toggleFooter()">Dock tile rack</mat-slide-toggle>
+        <mat-slide-toggle >Email notifications</mat-slide-toggle>
     </div>
     <button mat-mini-fab color="accent" class="sidenav-button-inner" (click)="sidenav.toggle()">
       <span>&#x0225A;</span>
