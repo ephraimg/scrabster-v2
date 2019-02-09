@@ -47,20 +47,12 @@
         Submit
     </button>
   </div>
-</mat-card>
-
-<mat-card class="info-bar with-fixed-footer">
-  <div class="banner-info">
-    <div>
-      Turn {{gameService.currentTurn}} ({{gameService.player.user.name}})
+    <div class="footer-info">
+        <span>
+            Turn {{gameService.currentTurn}} - {{gameService.player.user.name}}
+        </span>
+        <span *ngIf="gameService.isCurrentPlayerUser()">
+            Pending score: {{pendingScore}}
+        </span>
     </div>
-    <div *ngIf="gameService.isCurrentPlayerUser()">
-      Pending score: {{pendingScore}}
-    </div>
-    <br />
-    <br />
-    <div *ngFor="let player of gameService.players">
-      {{player.user.name}}'s total: {{player.score}}
-    </div>
-  </div>
 </mat-card>

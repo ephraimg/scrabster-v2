@@ -53,7 +53,7 @@ export class FooterComponent {
 
   get pendingScore() {
       if (this.playService.placements.length < 1) {
-          return 'Waiting... (no tiles placed or exchanged yet)';
+          return 'Waiting...';
       }
       if (this.playService.tilesToExchange.length > 0) {
           return '0 (exchanging tiles)';
@@ -61,7 +61,7 @@ export class FooterComponent {
       if (this.playValidationService.isValid(this.gameService.play)) {
           return this.playService.getScore(this.gameService.play);
       }
-      return 'Waiting... (play not valid)';
+      return 'Play not valid!';
   }
 
 }

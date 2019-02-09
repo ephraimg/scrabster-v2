@@ -21,6 +21,15 @@
 
   <mat-sidenav #sidenav mode="over" fixedInViewport="true" autoFocus="false" closed>
     <div class="inset-card">
+        <h1>Game</h1>
+        <div *ngFor="let player of gameService.players">
+            {{player.user.name}}: {{player.score}}
+        </div>
+        <div *ngIf="gameService.isCurrentPlayerUser()">
+            Pending score: {{pendingScore}}
+        </div>
+    </div>
+    <div class="inset-card">
         <h1>Navigation</h1>
         <button mat-raised-button routerLink="/home" routerLinkActive="active">Home</button>
         <button mat-raised-button routerLink="/rules">Rules</button>
@@ -28,7 +37,7 @@
     </div>
     <div class="inset-card">
         <h1>Settings</h1>
-        <mat-slide-toggle (change)="toggleFooter()">Dock tile rack</mat-slide-toggle>
+        <mat-slide-toggle [checked]="isFooterFixed" (change)="toggleFooter()">Dock tile rack</mat-slide-toggle>
         <mat-slide-toggle (change)="toggleEmailNotifications()">Email notifications</mat-slide-toggle>
     </div>
     <button mat-mini-fab color="accent" class="sidenav-button-inner" (click)="sidenav.toggle()">

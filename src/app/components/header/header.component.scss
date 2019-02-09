@@ -1,6 +1,8 @@
 
 :host {
     display: flex;
+    box-sizing: border-box;
     width: 28rem;
-    margin: 2rem;
+    margin: 1.5rem;
+    padding: 0.25rem;
 }
