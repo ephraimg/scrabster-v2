@@ -11,19 +11,31 @@ import {
 export const mockUser1: User = {
     id: 'mock1',
     name: 'Alice Smith',
-    email: 'asmith@gmail.com'
+    email: 'asmith@gmail.com',
+    settings: {
+        fixFooter: false,
+        emailNotifications: true
+    }
 };
 
 export const mockUser2: User = {
     id: 'mock2',
     name: 'Bob Smith',
-    email: 'bsmith@gmail.com'
+    email: 'bsmith@gmail.com',
+    settings: {
+        fixFooter: false,
+        emailNotifications: true
+    }
 };
 
 export const mockUser3: User = {
     id: 'mock3',
     name: 'Carol Smith',
-    email: 'csmith@gmail.com'
+    email: 'csmith@gmail.com',
+    settings: {
+        fixFooter: false,
+        emailNotifications: true
+    }
 };
 
 export const mockPlay1: Play = {

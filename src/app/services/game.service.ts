@@ -39,7 +39,8 @@ export class GameService {
         private playValidationService: PlayValidationService,
         private dataService: DataService,
     ) {
-        this.isFooterFixed = window.innerWidth <= 450;
+        this.isFooterFixed = window.innerWidth <= 450 
+            || this.dataService.user.settings.fixFooter;
     }
 
     get game() {

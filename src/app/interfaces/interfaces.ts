@@ -12,11 +12,18 @@ export interface Square {
     tile: Tile;
 };
 
+export interface UserSettings {
+    fixFooter: boolean;
+    emailNotifications: boolean;
+}
+
 export interface User {
     id: string;
     name: string;
     email: string;
+    settings: UserSettings;
 };
+
 
 export interface Placement {
     row: number;
