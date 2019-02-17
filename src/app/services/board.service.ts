@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BonusService } from './bonus.service';
 import { DataService } from './data.service';
-import { Board, Square } from '../interfaces/interfaces';
+import { Board, Square } from 'src/interfaces/interfaces';
 import { mockBoard } from '../../mock-data';
 
 @Injectable({

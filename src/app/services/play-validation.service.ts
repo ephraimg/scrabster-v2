@@ -4,7 +4,7 @@ import { BoardService } from './board.service';
 import {
     Play,
     Square,
-} from '../interfaces/interfaces';
+} from 'src/interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Game, User } from '../interfaces/interfaces';
+import { Game, User } from 'src/interfaces/interfaces';
 import { mockGame, mockUser1, mockUser2, mockUser3 } from '../../mock-data';
 
 @Injectable({

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DataService } from '../../services/data.service';
-import { User, Game } from '../../interfaces/interfaces';
+import { User, Game } from 'src/interfaces/interfaces';
 
 @Component({
     selector: 'app-home',

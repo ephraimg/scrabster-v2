@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
-import { Tile } from '../interfaces/interfaces';
+import { Tile } from 'src/interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'

@@ -16,7 +16,7 @@ import {
   Player,
   Square,
   Placement
-} from '../interfaces/interfaces';
+} from 'src/interfaces/interfaces';
 import {
   mockGame,
   mockUser1,

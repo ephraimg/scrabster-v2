@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Renderer2, ElementRef, HostListener } from '@angular/core';
 import { GameService } from '../../../services/game.service';
-import { Tile, Square } from 'src/app/interfaces/interfaces';
+import { Tile, Square } from 'src/interfaces/interfaces';
 
 const bonusMessages = {
   'tws': ['TRIPLE', 'WORD', 'SCORE'],

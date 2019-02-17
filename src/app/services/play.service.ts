@@ -7,7 +7,7 @@ import {
     Square,
     Tile,
     Board
-} from '../interfaces/interfaces';
+} from 'src/interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'

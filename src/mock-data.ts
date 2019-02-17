@@ -6,7 +6,7 @@ import {
     User,
     Play,
     Bag,
-} from './app/interfaces/interfaces';
+} from 'src/interfaces/interfaces';
 
 export const mockUser1: User = {
     id: 'mock1',

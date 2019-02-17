@@ -1,6 +1,6 @@
 import { Component, Input, HostBinding, HostListener, OnInit, Renderer2, ElementRef } from '@angular/core';
 import { GameService } from '../../services/game.service';
-import { Tile } from 'src/app/interfaces/interfaces';
+import { Tile } from 'src/interfaces/interfaces';
 
 @Component({
     selector: 'app-tile',
