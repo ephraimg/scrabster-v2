@@ -43,7 +43,7 @@
     <div class="inset-card">
         <h1>Settings</h1>
         <mat-slide-toggle [checked]="isFooterFixed" (change)="toggleFooter()">Dock tile rack</mat-slide-toggle>
-        <mat-slide-toggle (change)="toggleEmailNotifications()">Email notifications</mat-slide-toggle>
+        <mat-slide-toggle disabled (change)="toggleEmailNotifications()">Email notifications</mat-slide-toggle>
     </div>
     <button mat-mini-fab color="accent" class="sidenav-button-inner" (click)="sidenav.toggle()">
       <span>&#x0225A;</span>

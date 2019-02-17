@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,9 +14,10 @@ import { LoginComponent } from './components/login/login.component';
 import TileComponent from './components/tile/tile.component';
 import GameModule from './components/game/game.module';
 import TileModule from './components/tile/tile.module';
+import HeaderModule from './components/header/header.module';
 import { RulesComponent } from './components/rules/rules.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
-// import { MatButtonModule, MatCheckboxModule } from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -27,13 +30,14 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
   imports: [
     TileModule,
     GameModule,
+    HeaderModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatSelectModule,
     MatFormFieldModule,
-    // MatButtonModule,
-    // MatCheckboxModule
+    MatButtonModule,
+    MatCardModule,
   ],
   exports: [
     TileComponent,

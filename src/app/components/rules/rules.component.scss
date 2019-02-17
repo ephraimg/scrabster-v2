@@ -1,0 +1,39 @@
+:host {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-color: lightGrey;
+}
+
+.main {
+    height: 66vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: lightgray;
+}
+
+.header-wrapper {
+    position: relative;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: lightblue;
+    margin: 0;
+    padding: 2rem;
+    @media screen and (max-width: 599px) {
+        padding: 1.5rem 0.5rem;
+    }
+}
+
+app-header {
+    margin: 0;
+    @media screen and (max-width: 599px) {
+        transform: scale(0.85);
+    }
+}
