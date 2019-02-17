@@ -54,4 +54,8 @@ export class SquareComponent implements OnInit {
         this.gameService.selectSquareOrRack(this.square);
     }
 
+    get isDragDisabled() {
+        return !this.gameService.placedTiles.includes(this.square.tile);
+    }
+
 }

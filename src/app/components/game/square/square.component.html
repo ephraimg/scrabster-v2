@@ -32,10 +32,11 @@
     *ngIf="square && square.tile"
     [tile]="square.tile"
     cdkDrag
+    [cdkDragDisabled]="isDragDisabled"
     (cdkDragStarted)="gameService.dragStarted($event, square.tile)"
 ></app-tile>
 
 <div *ngIf="square && !square.tile && square.bonus === 'star'">&#x02605;</div>
-<div *ngIf="square && !square.tile && square.bonus !== 'star'" [ngClass]="'bonus-message'">
+<div *ngIf="square && square.bonus !== 'star'" [ngClass]="'bonus-message'">
     <div *ngFor="let word of bonusWords">{{word}}</div>
 </div>
