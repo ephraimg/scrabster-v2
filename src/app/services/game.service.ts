@@ -1,4 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+
 import { BoardService } from './board.service';
 import { BagService } from './bag.service';
 import { PlayService } from './play.service';
@@ -31,6 +33,10 @@ export class GameService {
 
     selectedTile: Tile;
     isFooterFixed: boolean;
+    allDropLists: string[] = ['testid'];
+    dragging: boolean = false;
+
+    renderer: Renderer2;
 
     constructor(
         private boardService: BoardService,
@@ -38,9 +44,16 @@ export class GameService {
         private playService: PlayService,
         private playValidationService: PlayValidationService,
         private dataService: DataService,
+        private rendererFactory: RendererFactory2
     ) {
-        this.isFooterFixed = window.innerWidth <= 450 
+        this.renderer = this.rendererFactory.createRenderer(null, null);
+        this.isFooterFixed = window.innerWidth <= 450
             || this.dataService.user.settings.fixFooter;
+        Array(15).fill(null).forEach((row, i) => {
+            Array(15).fill(null).forEach((col, j) => {
+                this.allDropLists.push(`square-${i}-${j}`);
+            })
+        });
     }
 
     get game() {
@@ -139,6 +152,36 @@ export class GameService {
         }
         
         this.selectedTile = null;
+    }
+
+    dragStarted(e, tile: Tile) {
+        this.renderer.addClass(e.source.element.nativeElement, 'selected');
+        this.selectedTile = tile;
+        this.dragging = true;
+    }
+
+    dropOnRack(event: CdkDragDrop<any>, targetSquare?: Square) {
+        console.log('dropOnRack. dropping...', event.previousContainer.id, 'to ', event.container.id);
+
+        this.dragging = false;
+        if (event.previousContainer === event.container) {
+            moveItemInArray(this.rack, event.previousIndex, event.currentIndex);
+        } else {
+            console.log('different target!!!');
+            this.selectSquareOrRack(targetSquare);
+        }
+    }
+
+    dropOnSquare(event: CdkDragDrop<any>, targetSquare?: Square) {
+        console.log('dropOnSquare. dropping...', event.previousContainer.id, 'to ', event.container.id);
+
+        this.dragging = false;
+        if (event.previousContainer === event.container) {
+            console.log('same event.container: ', event.container.id);
+        } else {
+            console.log('different target!!! event.container: ', event.container.id);
+            this.selectSquareOrRack(targetSquare);
+        }
     }
 
     rackSwap(tile1: Tile, tile2: Tile) {

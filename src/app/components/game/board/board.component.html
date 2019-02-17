@@ -1,13 +1,17 @@
 
-<div
-    *ngFor="let rowNum of arrayOf15; index as i;"
-    [ngClass]="'ui-row'"
->
-    <app-square
-        *ngFor="let square of arrayOf15; index as j;"
-        [id]="'square-' + i + '-' + j"
-        [selectedTile]="selectedTile"
-        [square]="boardService.getSquare(i, j)"
+<div cdkDropListGroup>
+    <div
+        *ngFor="let rowNum of arrayOf15; index as i;"
+        [ngClass]="'ui-row'"
     >
-    </app-square>
+        <app-square
+            *ngFor="let square of arrayOf15; index as j;"
+            [id]="'square-' + i + '-' + j"
+            [selectedTile]="selectedTile"
+            [square]="boardService.getSquare(i, j)"
+            cdkDropList
+            (cdkDropListDropped)="gameService.dropOnSquare($event, boardService.getSquare(i, j))"
+            [cdkDropListConnectedTo]="['testid']"
+        ></app-square>
+    </div>
 </div>
