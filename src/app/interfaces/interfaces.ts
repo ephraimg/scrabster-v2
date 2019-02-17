@@ -8,7 +8,7 @@ export interface Tile {
 export interface Square {
     row: number;
     col: number;
-    bonus?: string;
+    bonus: string;
     tile: Tile;
 };
 
@@ -21,7 +21,7 @@ export interface User {
 export interface Placement {
     row: number;
     col: number;
-    bonus?: string;
+    bonus: string;
     tile: Tile;
 }
 

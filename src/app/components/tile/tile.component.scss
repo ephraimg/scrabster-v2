@@ -1,14 +1,13 @@
 
-.ui-tile {
+:host {
     z-index: 900;
-    float: left;
+    display: block;
     position: relative;
     box-sizing: border-box;
     height: 2.9rem;
     width: 2.9rem;
     border: 0.05rem solid black;
     background-color: #FFDEAD;
-    display: inline-block;
     margin: 0 0.1rem;
     font-weight: 600;
     text-align: center;
@@ -17,11 +16,11 @@
     -webkit-box-shadow: -0.15rem 0.15rem 0.25rem 0 gray;
     -moz-box-shadow: -0.15rem 0.15rem 0.25rem 0 gray;
     box-shadow: -0.15rem 0.15rem 0.25rem 0 gray;
+    &.selected {
+        -webkit-box-shadow: 0 0 1.5rem 0.5rem #5E9ED6;
+        -moz-box-shadow: 0 0 1.5rem 0.5rem #5E9ED6;
+        box-shadow: 0 0 1.5rem 0.5rem #5E9ED6;
+        z-index: 900;    
+    }
 }
 
-.selected {
-    -webkit-box-shadow: 0 0 1.5rem 0.5rem #5E9ED6;
-    -moz-box-shadow: 0 0 1.5rem 0.5rem #5E9ED6;
-    box-shadow: 0 0 1.5rem 0.5rem #5E9ED6;
-    z-index: 900;    
-}

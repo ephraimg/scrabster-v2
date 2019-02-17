@@ -40,9 +40,9 @@ export const mockPlay1: Play = {
     ],
     placements: [
         { row: 7, col: 3, bonus: 'dls', tile: { "letter":"Q", "points":10, "id":"tile-Q-0" } },
-        { row: 7, col: 4, tile: { "letter":"U", "points":1, "id":"tile-U-0" } },
-        { row: 7, col: 5, tile: { "letter":"O", "points":1, "id":"tile-O-0" } },
-        { row: 7, col: 6, tile: { "letter":"T", "points":1, "id":"tile-T-0" } },
+        { row: 7, col: 4, bonus: null, tile: { "letter":"U", "points":1, "id":"tile-U-0" } },
+        { row: 7, col: 5, bonus: null, tile: { "letter":"O", "points":1, "id":"tile-O-0" } },
+        { row: 7, col: 6, bonus: null, tile: { "letter":"T", "points":1, "id":"tile-T-0" } },
         { row: 7, col: 7, bonus: 'star', tile: { "letter":"E", "points":1, "id":"tile-E-0" } },
     ],
     score: 48
@@ -61,8 +61,8 @@ export const mockPlay2: Play = {
         { "letter":"Y", "points":4, "id":"tile-Y-0" },
     ],
     placements: [
-        { row: 5, col: 6, tile: { "letter":"A", "points":1, "id":"tile-A-0" } },
-        { row: 6, col: 6, tile: { "letter":"P", "points":3, "id":"tile-P-0" } }
+        { row: 5, col: 6, bonus: null, tile: { "letter":"A", "points":1, "id":"tile-A-0" } },
+        { row: 6, col: 6, bonus: null, tile: { "letter":"P", "points":3, "id":"tile-P-0" } }
     ],
     score: 8
 }

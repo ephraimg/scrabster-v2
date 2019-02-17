@@ -6,9 +6,10 @@
   </button> -->
   <div
     cdkDropList
-    (cdkDropListDropped)="gameService.drop($event)"
+    (cdkDropListDropped)="gameService.dropOnRack($event)"
     [cdkDropListConnectedTo]="gameService.allDropLists"
     [cdkDropListData]="gameService.rack"
+    cdkDropListOrientation="horizontal"
     [id]="'testid'"
     class="ui-rack"
   >
@@ -17,8 +18,10 @@
         (cdkDragStarted)="gameService.dragStarted($event, tile)"
         *ngFor="let tile of gameService.rack"
         [tile]="tile"
-      ></app-tile>
+      >
+    </app-tile>
   </div>
+  
   <div class="button-row">
     <button
         mat-stroked-button

@@ -44,7 +44,7 @@ export class BonusService {
     }
 
     getBonus(row, col) {
-        return this.bonuses[row][col];
+        return this.bonuses[row][col] || '';
     }
 
 }

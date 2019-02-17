@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Renderer2, ElementRef, HostListener } from '@angular/core';
 import { GameService } from '../../../services/game.service';
 import { Tile, Square } from 'src/app/interfaces/interfaces';
 
@@ -25,27 +25,33 @@ const triangleCounts = {
 })
 export class SquareComponent implements OnInit {
 
-  @Input() square: Square;
-  @Input() selectedTile: Tile;
+    @Input() square: Square;
+    @Input() selectedTile: Tile;
 
-  bonusClass: string;
-  bonusWords: string[];
-  triangleCount: number;
+    bonusClass: string;
+    bonusWords: string[];
+    triangleCount: number;
 
-  constructor(public gameService: GameService) {
-  }
+    constructor(
+        public gameService: GameService,
+        private renderer: Renderer2,
+        private el: ElementRef
+    ) {}
 
-  ngOnInit() {
-    this.bonusClass = (this.square && this.square.bonus) || '';
-    this.bonusWords = (this.square && bonusMessages[this.square.bonus]) || [];
-    this.triangleCount = (this.square && triangleCounts[this.square.bonus]) || 0;
-    if (this.square && (this.square.bonus === 'star')) {
-      this.bonusClass = (this.square && this.square.tile) ? 'dws' : 'star';
+    ngOnInit() {
+        this.bonusWords = this.square ? bonusMessages[this.square.bonus] : [];
+        this.triangleCount = this.square ? triangleCounts[this.square.bonus] : 0;
+        this.bonusClass = this.square ? this.square.bonus : '';
+        // star class messes up appearance of tile. TODO: fix that!
+        if (this.bonusClass === 'star' && this.square.tile) { this.bonusClass = 'dws'; }
+        // add classes to host element
+        if (this.bonusClass !== '') { this.renderer.addClass(this.el.nativeElement, this.bonusClass); }
+        this.renderer.addClass(this.el.nativeElement, 'noselect');
     }
-  }
 
-  handleClick() {
-    this.gameService.selectSquareOrRack(this.square);
-  }
+    @HostListener('click')
+    handleClick() {
+        this.gameService.selectSquareOrRack(this.square);
+    }
 
 }
