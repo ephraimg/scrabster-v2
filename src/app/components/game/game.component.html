@@ -12,10 +12,12 @@
       <span>&#x02259;</span>
     </button>
     <app-header></app-header>
-    <mat-card *ngIf="windowWidth >= 600">
+    <mat-card *ngIf="windowWidth >= 600" [ngClass]="[gameService.isFooterFixed ? 'with-fixed' : '']">
       <app-board></app-board>
     </mat-card>
-    <app-board *ngIf="windowWidth < 600"></app-board>
+    <div *ngIf="windowWidth < 600" [ngClass]="[gameService.isFooterFixed ? 'with-fixed' : '']">
+        <app-board></app-board>
+    </div>
     <app-footer></app-footer>
   </mat-sidenav-content>
 
@@ -26,7 +28,10 @@
             {{player.user.name}}: {{player.score}}
         </div>
         <div *ngIf="gameService.isCurrentPlayerUser()">
-            Pending score: {{pendingScore}}
+            Pending score:
+            <span *ngIf="!gameService.dragging">
+                {{pendingScore}}
+            </span>
         </div>
     </div>
     <div class="inset-card">

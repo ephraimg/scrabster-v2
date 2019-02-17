@@ -63,7 +63,10 @@
             Turn {{gameService.currentTurn}} - {{gameService.player.user.name}}
         </span>
         <span *ngIf="gameService.isCurrentPlayerUser()">
-            Pending score: {{pendingScore}}
+            Pending score:
+            <span *ngIf="!gameService.dragging">
+                {{pendingScore}}
+            </span>
         </span>
     </div>
 </mat-card>
