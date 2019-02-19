@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import axios from 'axios';
+
 import { Game, User } from 'src/interfaces/interfaces';
 import { mockGame, mockUser1, mockUser2, mockUser3 } from '../../mock-data';
 
@@ -34,21 +36,17 @@ export class DataService {
     }
 
     fetchAllGames(id?: string) {
-        this.loading = true;
-        const that = this;
-        // setTimeout(() => {
-            that.games = [mockGame];
-            that.loading = false;
-        // }, 100);
+        axios.get('/games').then(({ data }) => {
+            console.log('games from server: ', data);
+            this.games = data;
+        });
     }
 
     fetchAllUsers(id?: string) {
-        this.loading = true;
-        const that = this;
-        // setTimeout(() => {
-            that.users = [mockUser1, mockUser2, mockUser3];;
-            that.loading = false;
-        // }, 100);
+        axios.get('/users').then(({ data }) => {
+            console.log('users from server: ', data);
+            this.users = data;
+        });
     }
 
     setNewGame(game: Game) {
