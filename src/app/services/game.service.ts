@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { v1 as uuid } from 'uuid';
 
 import { BoardService } from './board.service';
 import { BagService } from './bag.service';
@@ -91,15 +92,25 @@ export class GameService {
         this.isFooterFixed = !this.isFooterFixed;
     }
 
-    create(players: Player[]) {
-        // const newGame: Game = {
-        //   id: '1abc',
-        //   board: this.boardService.create(),
-        //   bag: this.bagService.create(),
-        //   players: players,
-        //   playHistory: [],
-        // }
-        // return newGame;r
+    createNewPlayer(user: User) {
+        return {
+            user: user,
+            rack: [],
+            score: 0
+        }
+    }
+
+    createNewGame(users: User[] = [mockUser1, mockUser2]) {
+        const players = users.map(user => this.createNewPlayer(user));
+        const newGame: Game = {
+          id: uuid(),
+          board: this.boardService.create(),
+          bag: this.bagService.create(),
+          players: players,
+          playHistory: [],
+          tilesToExchange: []
+        }
+        return newGame;
     }
 
     selectTile(event, tile: Tile) {

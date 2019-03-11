@@ -1,5 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material';
@@ -28,16 +29,17 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
     StatisticsComponent,
   ],
   imports: [
-    TileModule,
-    GameModule,
-    HeaderModule,
+    FormsModule,
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     MatSelectModule,
     MatFormFieldModule,
     MatButtonModule,
     MatCardModule,
+    HeaderModule,
+    GameModule,
+    TileModule,
+    AppRoutingModule,
   ],
   exports: [
     TileComponent,

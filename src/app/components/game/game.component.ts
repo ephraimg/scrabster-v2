@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import { DataService } from '../../services/data.service';
 import { GameService } from '../../services/game.service';
 import { PlayService } from '../../services/play.service';
 import { PlayValidationService } from '../../services/play-validation.service';
@@ -13,13 +16,17 @@ export class GameComponent implements OnInit {
     windowWidth: number;
 
     constructor(
+        private dataService: DataService,
         private gameService: GameService,
         private playService: PlayService,
         private playValidationService: PlayValidationService,
+        private route: ActivatedRoute,
     ) {}
 
     ngOnInit() {
         this.windowWidth = window.innerWidth;
+        const id = this.route.snapshot.paramMap.get('id');
+        this.dataService.fetchGame(id);
     }
 
     toggleFooter() {

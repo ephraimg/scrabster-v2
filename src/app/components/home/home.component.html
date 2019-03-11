@@ -7,22 +7,22 @@
     <mat-card class="game-selection">
         <p> Select a previous game to resume: </p>
         <mat-form-field>
-            <mat-select placeholder="Game">
+            <mat-select placeholder="Game" [(ngModel)]="selectedGameId">
                 <mat-option *ngFor="let game of games" [value]="game.id">
                     {{ game.id }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <button mat-raised-button>Go</button>
+        <button mat-raised-button (click)="handleResumeGameClick()">Go</button>
         <p> Or select an opponent for a new game: </p>
         <mat-form-field>
-            <mat-select placeholder="Opponent">
+            <mat-select placeholder="Opponent" [(ngModel)]="selectedOpponentId">
                 <mat-option *ngFor="let opponent of opponents" [value]="opponent.id">
                     {{ opponent.id }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <button mat-raised-button>Go</button>
+        <button mat-raised-button (click)="handleNewGameClick()">Go</button>
     </mat-card>
 
     <mat-card class="instructions">

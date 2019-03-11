@@ -9,44 +9,68 @@ import { mockGame, mockUser1, mockUser2, mockUser3 } from '../../mock-data';
 })
 export class DataService {
 
-    private currentUser: User;
-    private currentGame: Game;
+    private currentUser: User = mockUser1;
+    private currentGame: Game = mockGame;
     private users: User[];
     private games: Game[];
-    loading;
+    loading = false;
 
     constructor() {}
 
-    fetchGame(id?: string) {
+    fetchGame(id: string) {
         this.loading = true;
-        const that = this;
-        // setTimeout(() => {
-            that.currentGame = mockGame;
-            that.loading = false;
-        // }, 100);
+        axios.get(`/games?id=${id}`)
+            .then(({ data }) => {
+                console.log('game from server: ', data);
+                this.currentGame = data;
+                this.loading = false;
+            })
+            .catch(err => {
+                console.log('game fetching error: ', err);
+                this.loading = false;
+            });
     }
 
-    fetchUser(id?: string) {
+    fetchUser(id: string) {
         this.loading = true;
-        const that = this;
-        // setTimeout(() => {
-            that.currentUser = mockUser1;
-            that.loading = false;
-        // }, 100);
+        axios.get(`/users?id=${id}`)
+            .then(({ data }) => {
+                console.log('users from server: ', data);
+                this.currentUser = data;
+                this.loading = false;
+            })
+            .catch(err =>{
+                console.log('user fetching error: ', err);
+                this.loading = false;
+            });
     }
 
-    fetchAllGames(id?: string) {
-        axios.get('/games').then(({ data }) => {
-            console.log('games from server: ', data);
-            this.games = data;
-        });
+    fetchAllGames() {
+        this.loading = true;
+        axios.get('/games')
+            .then(({ data }) => {
+                console.log('games from server: ', data);
+                this.games = data;
+                this.loading = false;
+            })
+            .catch(err => {
+                console.log('games fetching error: ', err);
+                this.loading = false;
+            });
     }
 
-    fetchAllUsers(id?: string) {
-        axios.get('/users').then(({ data }) => {
-            console.log('users from server: ', data);
-            this.users = data;
-        });
+    fetchAllUsers() {
+        this.loading = true;
+        axios.get('/users')
+            .then(({ data }) => {
+                console.log('users from server: ', data);
+                this.users = data;
+                this.loading = false;
+            })
+            .catch(err => {
+                console.log('user fetching error: ', err);
+                this.loading = false;
+            });
     }
 
     setNewGame(game: Game) {

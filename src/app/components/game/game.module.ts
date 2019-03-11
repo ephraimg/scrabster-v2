@@ -17,6 +17,8 @@ import { SquareComponent } from './square/square.component';
 import { TrianglesComponent } from './triangles/triangles.component';
 import { FooterComponent } from './footer/footer.component';
 
+import { GameRoutingModule } from './game-routing.module';
+
 @NgModule({
   declarations: [
     GameComponent,
@@ -35,6 +37,7 @@ import { FooterComponent } from './footer/footer.component';
     DragDropModule,
     HeaderModule,
     TileModule,
+    GameRoutingModule,
   ],
   providers: [],
 })
