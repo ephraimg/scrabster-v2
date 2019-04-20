@@ -1,4 +1,4 @@
-<h1>Users</h1>
+<button mat-raised-button routerLink="/home" routerLinkActive="active">Home</button>
 
 <table>
   <thead>
@@ -13,15 +13,17 @@
     <td>{{user.name}}</td>
     <td>{{user.email}}</td>
     <td>
-      {{user.memberStatus}}
+      <span [ngClass]="getStatus(user.id) ? getStatus(user.id).toLowerCase() : ''">
+        {{getStatus(user.id) || user.memberStatus}}
+      </span>
       <div
-        *ngIf="user.memberStatus === 'PENDING'"
+        *ngIf="user.memberStatus === 'PENDING' && !getStatus(user.id)"
         (click)="activateUser(user.id)"
       >
         &#10003;
       </div>
       <div
-        *ngIf="user.memberStatus === 'PENDING'"
+        *ngIf="user.memberStatus === 'PENDING' && !getStatus(user.id)"
         (click)="rejectUser(user.id)"
       >
         &#10007;

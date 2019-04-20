@@ -7,8 +7,8 @@ import { Tile } from 'src/interfaces/interfaces';
     styleUrls: ['./tile.component.scss'],
     template: `
       <div [ngClass]="'tile-text'">
-        <span>{{tile.letter}}</span>
-        <span [ngClass]="'tile-points'">{{tile.points}}</span>
+        <span>{{tile.letter !== '_' ? tile.letter : ''}}</span>
+        <span [ngClass]="'tile-points'">{{tile.points > 0 ? tile.points : ''}}</span>
       </div>
     `
 })

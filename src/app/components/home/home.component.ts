@@ -31,7 +31,8 @@ export class HomeComponent {
     }
 
     get opponents() {
-        return this.dataService.allUsers;
+        return this.dataService.allUsers
+          .filter(user => !['PENDING', 'REJECTED'].includes(user.memberStatus));
     }
 
     handleNewGameClick() {

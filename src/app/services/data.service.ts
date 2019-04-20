@@ -11,8 +11,8 @@ export class DataService {
 
   private currentUser: User; // = emptyUser;
   private currentGame: Game;
-  private users: User[];
-  private games: Game[];
+  private users: User[] = [];
+  private games: Game[] = [];
   loading = false;
 
   constructor() {}
@@ -75,7 +75,7 @@ export class DataService {
     this.loading = true;
     return axios.put('/users', { id: userId, memberStatus: 'ACTIVE' })
       .then(({ data }) => {
-        console.log('updated user from server: ', data);
+        console.log('activateUser - data: ', data);
         return data;
       })
       .catch(err => { console.log('user update error: ', err); })
@@ -86,7 +86,7 @@ export class DataService {
     this.loading = true;
     return axios.put('/users', { id: userId, memberStatus: 'REJECTED' })
       .then(({ data }) => {
-        console.log('updated user from server: ', data);
+        // console.log('rejectUser - data: ', data);
         return data;
       })
       .catch(err => { console.log('user update error: ', err); })
@@ -97,7 +97,7 @@ export class DataService {
     this.loading = true;
     return axios.get('/games')
       .then(({ data }) => {
-        console.log('games from server: ', data);
+        // console.log('games from server: ', data);
         this.games = data;
         return data;
       })
@@ -109,7 +109,7 @@ export class DataService {
     this.loading = true;
     return axios.get('/users')
       .then(({ data }) => {
-        console.log('users from server: ', data);
+        // console.log('users from server: ', data);
         this.users = data;
         return data;
       })
