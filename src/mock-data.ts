@@ -8,10 +8,28 @@ import {
     Bag,
 } from 'src/interfaces/interfaces';
 
+export const emptyUser: User = {
+    id: null,
+    name: null,
+    givenName: null,
+    familyName: null,
+    email: null,
+    imageUrl: null,
+    memberStatus: 'PENDING',
+    settings: {
+        fixFooter: false,
+        emailNotifications: false
+    }
+};
+
 export const mockUser1: User = {
-    id: 'mock1',
+    id: '113014011347326240001',
     name: 'Alice Smith',
+    givenName: 'Alice',
+    familyName: 'Smith',
     email: 'asmith@gmail.com',
+    imageUrl: 'http://www.fakeurl.com/1',
+    memberStatus: 'ACTIVE',
     settings: {
         fixFooter: false,
         emailNotifications: true
@@ -19,9 +37,13 @@ export const mockUser1: User = {
 };
 
 export const mockUser2: User = {
-    id: 'mock2',
+    id: '113014011347326240002',
     name: 'Bob Smith',
+    givenName: 'Bob',
+    familyName: 'Smith',
     email: 'bsmith@gmail.com',
+    imageUrl: 'http://www.fakeurl.com/2',
+    memberStatus: 'ACTIVE',
     settings: {
         fixFooter: false,
         emailNotifications: true
@@ -29,9 +51,13 @@ export const mockUser2: User = {
 };
 
 export const mockUser3: User = {
-    id: 'mock3',
+    id: '113014011347326240003',
     name: 'Carol Smith',
+    givenName: 'Carol',
+    familyName: 'Smith',
     email: 'csmith@gmail.com',
+    imageUrl: 'http://www.fakeurl.com/3',
+    memberStatus: 'ACTIVE',
     settings: {
         fixFooter: false,
         emailNotifications: true
@@ -92,9 +118,7 @@ mockSquares[7][7].tile = { "letter":"E", "points":1, "id":"tile-E-0" };
 mockSquares[5][6].tile = { "letter":"A", "points":1, "id":"tile-A-0" };
 mockSquares[6][6].tile = { "letter":"P", "points":3, "id":"tile-P-0" };
 
-export const mockBoard: Board = {
-    squares: mockSquares
-};
+export const mockBoard: Board = mockSquares;
 
 export const mockBag: Bag = [
     { "letter":"_", "points":0, "id":"tile-_-0" },

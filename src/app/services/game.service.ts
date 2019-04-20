@@ -9,22 +9,13 @@ import { PlayValidationService } from './play-validation.service';
 import { DataService } from './data.service';
 import {
   Game,
-  Board,
-  Bag,
   User,
-  Play,
   Tile,
-  Player,
   Square,
-  Placement
 } from 'src/interfaces/interfaces';
 import {
-  mockGame,
   mockUser1,
   mockUser2,
-  mockUser3,
-  mockBoard,
-  mockBag,
 } from '../../mock-data';
 
 @Injectable({
@@ -69,7 +60,7 @@ export class GameService {
         const userPlayer = this.players.find(player => {
             return player.user.id === this.user.id;
         });
-        return userPlayer.rack;
+        return userPlayer ? userPlayer.rack : [];
     }
     get players() {
         return this.playService.players;
@@ -85,7 +76,9 @@ export class GameService {
     }
 
     isCurrentPlayerUser() {
-        return this.player.user.id === this.user.id;
+        return this.player && this.user
+            ? this.player.user.id === this.user.id
+            : false;
     }
 
     toggleFooter() {
@@ -100,9 +93,9 @@ export class GameService {
         }
     }
 
-    createNewGame(users: User[] = [mockUser1, mockUser2]) {
+    createNewGame(users: User[] = [mockUser1, mockUser2]): Game {
         const players = users.map(user => this.createNewPlayer(user));
-        const newGame: Game = {
+        return {
           id: uuid(),
           board: this.boardService.create(),
           bag: this.bagService.create(),
@@ -110,7 +103,6 @@ export class GameService {
           playHistory: [],
           tilesToExchange: []
         }
-        return newGame;
     }
 
     selectTile(event, tile: Tile) {
@@ -170,8 +162,6 @@ export class GameService {
     }
 
     dropOnRack(event: CdkDragDrop<any>, targetSquare?: Square) {
-        console.log('dropOnRack. dropping...', event.previousContainer.id, 'to ', event.container.id);
-
         this.dragging = false;
         if (event.previousContainer === event.container) {
             moveItemInArray(this.rack, event.previousIndex, event.currentIndex);
@@ -181,8 +171,6 @@ export class GameService {
     }
 
     dropOnSquare(event: CdkDragDrop<any>, targetSquare?: Square) {
-        console.log('dropOnSquare. dropping...', event.previousContainer.id, 'to ', event.container.id);
-        
         this.dragging = false;
         if (targetSquare.tile) { return; }
         if (event.previousContainer === event.container) {
@@ -266,7 +254,7 @@ export class GameService {
     submitPlay() {
         if (this.tilesToExchange.length > 0 && this.placements.length > 0) {
             // this shouldn't happen, so reset the play!
-            console.log('Error: Tiles were both placed on board and selected to exchange');
+            // console.log('Error: Tiles were both placed on board and selected to exchange');
             return this.playClear();
         }
         if (this.tilesToExchange.length > 0) {
@@ -293,7 +281,7 @@ export class GameService {
     }
 
     get currentTurn() {
-        return this.game.playHistory.length + 1;
+        return this.game ? this.game.playHistory.length + 1 : 0;
     }
 
     get gameOver() {

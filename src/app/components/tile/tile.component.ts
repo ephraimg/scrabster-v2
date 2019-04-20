@@ -6,8 +6,10 @@ import { Tile } from 'src/interfaces/interfaces';
     selector: 'app-tile',
     styleUrls: ['./tile.component.scss'],
     template: `
-        <app-letter>{{tile.letter}}</app-letter>
-        <app-points>{{tile.points}}</app-points>
+      <div [ngClass]="'tile-text'">
+        <span>{{tile.letter}}</span>
+        <span [ngClass]="'tile-points'">{{tile.points}}</span>
+      </div>
     `
 })
 export default class TileComponent implements OnInit {

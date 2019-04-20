@@ -55,7 +55,9 @@ export class SquareComponent implements OnInit {
     }
 
     get isDragDisabled() {
-        return !this.gameService.placedTiles.includes(this.square.tile);
+        return this.gameService.placedTiles
+            ? !this.gameService.placedTiles.includes(this.square.tile)
+            : false;
     }
 
 }

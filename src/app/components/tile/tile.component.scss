@@ -17,10 +17,25 @@
     -moz-box-shadow: -0.15rem 0.15rem 0.25rem 0 gray;
     box-shadow: -0.15rem 0.15rem 0.25rem 0 gray;
     &.selected {
-        -webkit-box-shadow: 0 0 1.5rem 0.5rem #5E9ED6;
-        -moz-box-shadow: 0 0 1.5rem 0.5rem #5E9ED6;
-        box-shadow: 0 0 1.5rem 0.5rem #5E9ED6;
-        z-index: 900;    
+      -webkit-box-shadow: 0 0 1.5rem 0.5rem #5E9ED6;
+      -moz-box-shadow: 0 0 1.5rem 0.5rem #5E9ED6;
+      box-shadow: 0 0 1.5rem 0.5rem #5E9ED6;
+      z-index: 900;    
     }
 }
 
+.tile-text {
+  font-size: 1rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%); /* IE 9 */
+  -webkit-transform: translate(-50%, -50%); /* Safari */
+  transform: translate(-50%, -50%);
+  height: 100%;
+}
+
+.tile-points {
+  font-size: 0.8rem;
+  vertical-align: sub;
+}

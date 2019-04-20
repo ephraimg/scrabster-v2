@@ -26,7 +26,11 @@ export class GameComponent implements OnInit {
     ngOnInit() {
         this.windowWidth = window.innerWidth;
         const id = this.route.snapshot.paramMap.get('id');
-        this.dataService.fetchGame(id);
+        // todo - check if game is already loaded to avoid fetching
+        this.dataService.fetchGame(id)
+          .then(() => {
+            this.playService.playNext();
+          });
     }
 
     toggleFooter() {

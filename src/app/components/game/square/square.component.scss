@@ -41,15 +41,18 @@
     z-index: 999;
 }
 
-.bonus-message {
-    font-size: 50%;
-    line-height: 125%;
+.bonus-message, .bonus-star {
     position: absolute;
     top: 50%;
     left: 50%;
     -ms-transform: translate(-50%, -50%); /* IE 9 */
     -webkit-transform: translate(-50%, -50%); /* Safari */
     transform: translate(-50%, -50%);
+}
+
+.bonus-message {
+    font-size: 50%;
+    line-height: 125%;
 }
 
 /* 

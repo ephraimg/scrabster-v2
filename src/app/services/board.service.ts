@@ -9,13 +9,15 @@ import { mockBoard } from '../../mock-data';
 })
 export class BoardService {
 
-    private squares: Square[][];
-
     constructor(
         private bonusService: BonusService,
         private dataService: DataService
-    ) {
-        this.squares = this.dataService.game.board.squares;
+    ) { }
+
+    get squares() {
+        return this.dataService.game
+            ? this.dataService.game.board
+            : [[]];
     }
 
     get board() {
@@ -38,12 +40,11 @@ export class BoardService {
     }
 
     create() {
-        const sqArr = Array(15).fill(null).map((wholeRow, row) => {
+        return Array(15).fill(null).map((wholeRow, row) => {
             return Array(15).fill(null).map((sqInRow, col) => {
                 return { row, col, bonus: this.bonusService.getBonus(row, col), tile: null };
             });
         });
-        return { squares: sqArr }
     }
 
     display() {

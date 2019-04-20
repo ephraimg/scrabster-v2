@@ -18,6 +18,8 @@ import TileModule from './components/tile/tile.module';
 import HeaderModule from './components/header/header.module';
 import { RulesComponent } from './components/rules/rules.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
+import { WaitingRoomComponent } from './components/waiting-room/waiting-room.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 
 @NgModule({
@@ -27,6 +29,8 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
     LoginComponent,
     RulesComponent,
     StatisticsComponent,
+    WaitingRoomComponent,
+    AdminComponent,
   ],
   imports: [
     FormsModule,

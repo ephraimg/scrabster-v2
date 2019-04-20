@@ -20,10 +20,22 @@ export interface UserSettings {
 export interface User {
     id: string;
     name: string;
+    givenName: string;
+    familyName: string;
     email: string;
+    imageUrl: string;
+    memberStatus: 'ACTIVE' | 'PENDING' | 'REJECTED' | 'ADMIN';
     settings: UserSettings;
 };
 
+export interface ExtractedGoogleUser {
+    id: string;
+    name: string;
+    givenName: string;
+    familyName: string;
+    email: string;
+    imageUrl: string;
+}
 
 export interface Placement {
     row: number;
@@ -55,8 +67,10 @@ export interface Game {
     tilesToExchange: Tile[];
 };
 
-export interface Board {
-    squares: Square[][];
-};
+// export interface Board {
+//     squares: Square[][];
+// };
+
+export interface Board extends Array<Array<Square>> {};
 
 export interface Bag extends Array<Tile> {};

@@ -4,21 +4,27 @@
 </div>
 
 <div class="main">
+    <mat-card class="game-selection" *ngIf="isAdmin">
+      <p> You are logged in as an administrator </p>
+      <button mat-raised-button (click)="router.navigate(['/admin'])">Go to Admin page</button>
+    </mat-card>
+
     <mat-card class="game-selection">
         <p> Select a previous game to resume: </p>
         <mat-form-field>
             <mat-select placeholder="Game" [(ngModel)]="selectedGameId">
                 <mat-option *ngFor="let game of games" [value]="game.id">
-                    {{ game.id }}
+                  <span *ngFor="let player of game.players">{{ player.user.givenName }}, </span>
+                    started {{ getDateGameCreated(game._id).toLocaleString("en-us") }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
         <button mat-raised-button (click)="handleResumeGameClick()">Go</button>
         <p> Or select an opponent for a new game: </p>
         <mat-form-field>
-            <mat-select placeholder="Opponent" [(ngModel)]="selectedOpponentId">
-                <mat-option *ngFor="let opponent of opponents" [value]="opponent.id">
-                    {{ opponent.id }}
+            <mat-select placeholder="Opponent" [(ngModel)]="selectedOpponent">
+                <mat-option *ngFor="let opponent of opponents" [value]="opponent">
+                    {{ opponent.name }}
                 </mat-option>
             </mat-select>
         </mat-form-field>

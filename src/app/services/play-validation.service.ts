@@ -30,20 +30,20 @@ export class PlayValidationService {
     isValid(play: Play) {
         // if 1st play, check if word crosses center
         if (play.playNumber === 0 && !this.crossesCenter(play)) {
-            console.log('Invalid play: First play must cross the center');
+            // console.log('Invalid play: First play must cross the center');
             return false;
         } // check if word played is in a straight line
         if (!this.formsLine(play)) {
-            console.log('Invalid play: Play must be in a straight line');
+            // console.log('Invalid play: Play must be in a straight line');
             return false;
         } // check if word played is contiguous (if > 1 long)
         if (!this.isContiguous(play)) {
-            console.log('Invalid play: Play must be contiguous');
+            // console.log('Invalid play: Play must be contiguous');
             return false;
         } // check if word connects to other words (if 1st play)
         const orient = this.wordOrientation(play);
         if (play.playNumber > 0 && !this.isConnected(play, orient)) {
-            console.log('Invalid play: Play must be attached');
+            // console.log('Invalid play: Play must be attached');
             return false;
         } // otherwise, all good!
         return true;

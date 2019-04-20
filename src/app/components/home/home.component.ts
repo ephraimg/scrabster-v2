@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { DataService } from '../../services/data.service';
+import { AuthService } from '../../services/auth.service';
+import { GameService } from '../../services/game.service';
 import { User, Game } from 'src/interfaces/interfaces';
 
 @Component({
@@ -12,10 +14,12 @@ import { User, Game } from 'src/interfaces/interfaces';
 export class HomeComponent {
 
     selectedGameId: string;
-    selectedOpponentId: string;
+    selectedOpponent: User;
 
     constructor(
         private dataService: DataService,
+      private authService: AuthService,
+      private gameService: GameService,
         private router: Router
     ) {
         this.dataService.fetchAllGames();
@@ -30,24 +34,27 @@ export class HomeComponent {
         return this.dataService.allUsers;
     }
 
-    handleNewGameClick(players: User[]) {
-        if (!this.selectedOpponentId) { return; }
-            // const newGame: Game = this.gameService.create(players);
-            // this.dataService.setNewGame(newGame);
-
-        // create a new game
-        // save new game to db
-        // get new game id
-        // navigate to /game/:newid
-
-
-        console.log(this.selectedOpponentId);
-
+    handleNewGameClick() {
+      const users = [this.dataService.user, this.selectedOpponent];
+      if (!this.selectedOpponent) { return; }
+      const newGame: Game = this.gameService.createNewGame(users);
+      this.dataService.setNewGame(newGame);
+      this.gameService.rackFill();
+      this.dataService.saveNewGame(newGame);
+      this.router.navigate(['/game', newGame.id]);
     }
 
     handleResumeGameClick() {
         if (!this.selectedGameId) { return; }
         this.router.navigate(['/game', this.selectedGameId]);
     }
+
+    get isAdmin() {
+      return this.authService.isAdmin();
+    }
+
+  getDateGameCreated(objectId) {
+    return new Date(parseInt(objectId.substring(0, 8), 16) * 1000);
+  }
 
 }

@@ -1,0 +1,32 @@
+<h1>Users</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Status</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of dataService.users">
+    <td>{{user.name}}</td>
+    <td>{{user.email}}</td>
+    <td>
+      {{user.memberStatus}}
+      <div
+        *ngIf="user.memberStatus === 'PENDING'"
+        (click)="activateUser(user.id)"
+      >
+        &#10003;
+      </div>
+      <div
+        *ngIf="user.memberStatus === 'PENDING'"
+        (click)="rejectUser(user.id)"
+      >
+        &#10007;
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
