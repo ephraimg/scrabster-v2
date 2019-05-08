@@ -21,7 +21,9 @@ export class GameComponent implements OnInit {
         private playService: PlayService,
         private playValidationService: PlayValidationService,
         private route: ActivatedRoute,
-    ) {}
+    ) {
+      this.dataService.loading = true;
+    }
 
     ngOnInit() {
         this.windowWidth = window.innerWidth;
@@ -30,6 +32,7 @@ export class GameComponent implements OnInit {
         this.dataService.fetchGame(id)
           .then(() => {
             this.playService.playNext();
+            this.dataService.loading = false;
           });
     }
 

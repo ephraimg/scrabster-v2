@@ -20,6 +20,8 @@ import { RulesComponent } from './components/rules/rules.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { WaitingRoomComponent } from './components/waiting-room/waiting-room.component';
 import { AdminComponent } from './components/admin/admin.component';
+import SpinnerModule from './components/spinner/spinner.module';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 
 @NgModule({
@@ -43,10 +45,12 @@ import { AdminComponent } from './components/admin/admin.component';
     HeaderModule,
     GameModule,
     TileModule,
+    SpinnerModule,
     AppRoutingModule,
   ],
   exports: [
     TileComponent,
+    SpinnerComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -18,7 +18,6 @@ export class DataService {
   constructor() {}
 
   fetchGame(id: string): Promise<any> {
-    this.loading = true;
     return axios.get(`/games?id=${id}`)
       .then(({ data }) => {
         // console.log('game from server: ', data[0]);
@@ -26,25 +25,19 @@ export class DataService {
         return data[0];
       })
       .catch(err => { console.log('game fetching error: ', err); })
-      .finally(() => { this.loading = false; });
   }
 
   saveNewGame(game: Game = this.currentGame) {
-    this.loading = true;
     return axios.post('/games', game)
       .catch(err => { console.log('saveNewGame - error: ', err); })
-      .finally(() => { this.loading = false; });
   }
 
   saveUpdatedGame(game: Game = this.currentGame) {
-    this.loading = true;
     return axios.put('/games', game)
       .catch(err => { console.log('saveUpdatedGame - error: ', err); })
-      .finally(() => { this.loading = false; });
   }
 
   fetchUser(id: string): Promise<any> {
-    this.loading = true;
     return axios.get(`/users?id=${id}`)
       .then(({ data }) => {
         if (!data.length) {
@@ -55,11 +48,9 @@ export class DataService {
         return data[0];
       })
       .catch(err => { console.log('fetchUser - user fetching error: ', err); })
-      .finally(() => { this.loading = false; });
   }
 
   createUser(extractedGoogleUser: ExtractedGoogleUser): Promise<any> {
-    this.loading = true;
     // Ensure saved user has all user fields
     const completeUser = Object.assign(emptyUser, extractedGoogleUser);
     return axios.post('/users', completeUser)
@@ -68,33 +59,27 @@ export class DataService {
         return data;
       })
       .catch(err => { console.log('createUser - error: ', err); })
-      .finally(() => { this.loading = false; });
   }
 
   activateUser(userId: string): Promise<any> {
-    this.loading = true;
     return axios.put('/users', { id: userId, memberStatus: 'ACTIVE' })
       .then(({ data }) => {
         console.log('activateUser - data: ', data);
         return data;
       })
       .catch(err => { console.log('user update error: ', err); })
-      .finally(() => { this.loading = false; });
   }
 
   rejectUser(userId: string): Promise<any> {
-    this.loading = true;
     return axios.put('/users', { id: userId, memberStatus: 'REJECTED' })
       .then(({ data }) => {
         // console.log('rejectUser - data: ', data);
         return data;
       })
       .catch(err => { console.log('user update error: ', err); })
-      .finally(() => { this.loading = false; });
   }
 
   fetchAllGames(): Promise<any> {
-    this.loading = true;
     return axios.get('/games')
       .then(({ data }) => {
         // console.log('games from server: ', data);
@@ -102,11 +87,9 @@ export class DataService {
         return data;
       })
       .catch(err => { console.log('games fetching error: ', err); })
-      .finally(() => { this.loading = false; });
   }
 
   fetchAllUsers(): Promise<any> {
-    this.loading = true;
     return axios.get('/users')
       .then(({ data }) => {
         // console.log('users from server: ', data);
@@ -114,7 +97,6 @@ export class DataService {
         return data;
       })
       .catch(err => { console.log('user fetching error: ', err); })
-      .finally(() => { this.loading = false; });
   }
 
   fetchOrCreateUser(extractedGoogleUser: ExtractedGoogleUser): Promise<any> {
@@ -133,7 +115,6 @@ export class DataService {
         return Promise.resolve(user);
       })
       .catch(err => { console.log('fetchOrCreateUser - error: ', err); })
-      .finally(() => { this.loading = false; });
   }
 
   setNewGame(game: Game) {

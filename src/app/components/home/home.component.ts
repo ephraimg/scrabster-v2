@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Renderer2, ElementRef, ViewChild, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { DataService } from '../../services/data.service';
@@ -11,48 +11,75 @@ import { User, Game } from 'src/interfaces/interfaces';
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
-    selectedGameId: string;
-    selectedOpponent: User;
+  @ViewChild('headerwrapper') headerWrapper: ElementRef;
 
-    constructor(
-        private dataService: DataService,
-      private authService: AuthService,
-      private gameService: GameService,
-        private router: Router
-    ) {
-        this.dataService.fetchAllGames();
-        this.dataService.fetchAllUsers();
-    }
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.setLogoScale(event.target.innerWidth);
+  }
 
-    get games() {
-        return this.dataService.allGames;
-    }
+  selectedGameId: string;
+  selectedOpponent: User;
 
-    get opponents() {
-        return this.dataService.allUsers
-          .filter(user => !['PENDING', 'REJECTED'].includes(user.memberStatus));
-    }
+  constructor(
+    public dataService: DataService,
+    private authService: AuthService,
+    private gameService: GameService,
+    private router: Router,
+    private renderer: Renderer2
+  ) {
+      this.dataService.fetchAllGames();
+      this.dataService.fetchAllUsers();
+  }
 
-    handleNewGameClick() {
-      const users = [this.dataService.user, this.selectedOpponent];
-      if (!this.selectedOpponent) { return; }
-      const newGame: Game = this.gameService.createNewGame(users);
-      this.dataService.setNewGame(newGame);
-      this.gameService.rackFill();
-      this.dataService.saveNewGame(newGame);
-      this.router.navigate(['/game', newGame.id]);
-    }
+  ngOnInit() {
+    this.setLogoScale(window.innerWidth);
+  }
 
-    handleResumeGameClick() {
-        if (!this.selectedGameId) { return; }
-        this.router.navigate(['/game', this.selectedGameId]);
-    }
+  setLogoScale(windowWidth) {
+    // For wider window, logo looks good at 1.3 scale
+    let scale = windowWidth > 599 ? 1.3 : windowWidth / 350;
+    if (scale > 1.3) { scale = 1.3; }
+    this.renderer.setStyle(
+      this.headerWrapper.nativeElement,
+      'transform',
+      `scale(${scale})`
+    );
+  }
 
-    get isAdmin() {
-      return this.authService.isAdmin();
-    }
+  get games() {
+      return this.dataService.allGames;
+  }
+
+  get opponents() {
+      return this.dataService.allUsers
+        .filter(user => !['PENDING', 'REJECTED'].includes(user.memberStatus));
+  }
+
+  handleNewGameClick() {
+    const users = [this.dataService.user, this.selectedOpponent];
+    if (!this.selectedOpponent) { return; }
+    this.dataService.loading = true;
+    const newGame: Game = this.gameService.createNewGame(users);
+    this.dataService.setNewGame(newGame);
+    this.gameService.rackFill();
+    this.dataService.saveNewGame(newGame)
+      .then(() => {
+        this.dataService.loading = false;
+        this.router.navigate(['/game', newGame.id]);
+      });
+  }
+
+  handleResumeGameClick() {
+      if (!this.selectedGameId) { return; }
+      this.router.navigate(['/game', this.selectedGameId]);
+  }
+
+  get isAdmin() {
+    return this.authService.isAdmin();
+  }
 
   getDateGameCreated(objectId) {
     return new Date(parseInt(objectId.substring(0, 8), 16) * 1000);

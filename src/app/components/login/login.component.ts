@@ -13,14 +13,16 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private dataService: DataService,
+    public dataService: DataService,
   ) { }
 
   signIn(): void {
+    this.dataService.loading = true;
     this.authService.googleSignIn()
       .then(extractedGoogleUser => {
         return this.dataService.fetchOrCreateUser(extractedGoogleUser);
       }).then(scrabsterUser => {
+        this.dataService.loading = false;
         // console.log('signIn - user is: ', scrabsterUser);
         if (scrabsterUser.memberStatus === 'PENDING') {
           this.router.navigate(['/waiting-room']);
