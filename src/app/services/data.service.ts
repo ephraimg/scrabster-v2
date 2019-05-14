@@ -45,6 +45,7 @@ export class DataService {
           return null;
         }
         // console.log('fetchUser - returning user found on server: ', data[0]);
+        this.currentUser = data[0];
         return data[0];
       })
       .catch(err => { console.log('fetchUser - user fetching error: ', err); })

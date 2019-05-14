@@ -18,22 +18,44 @@ export class LoginComponent {
 
   signIn(): void {
     this.dataService.loading = true;
-    this.authService.googleSignIn()
+    const scrabsterId = window.localStorage.getItem('scrabster-id');
+    if (scrabsterId) {
+      this.handleLoggedInUser(scrabsterId);
+    } else {
+      this.handleLoggedOutUser();
+    }
+  }
+
+  handleLoggedInUser(scrabsterId) {
+    return this.dataService.fetchUser(scrabsterId)
+      .then(scrabsterUser => {
+        this.redirectUser(scrabsterUser);
+      }).catch(error => {
+        console.log('handleLoggedInUser error: ', error);
+      });    
+  }
+
+  handleLoggedOutUser() {
+    return this.authService.googleSignIn()
       .then(extractedGoogleUser => {
+        window.localStorage.setItem('scrabster-id', extractedGoogleUser.id);
         return this.dataService.fetchOrCreateUser(extractedGoogleUser);
       }).then(scrabsterUser => {
-        this.dataService.loading = false;
-        // console.log('signIn - user is: ', scrabsterUser);
-        if (scrabsterUser.memberStatus === 'PENDING') {
-          this.router.navigate(['/waiting-room']);
-        } else if (['ACTIVE', 'ADMIN'].includes(scrabsterUser.memberStatus)) {
-          this.router.navigate(['/home']);
-        } else {
-          this.router.navigate(['/login']);
-        }
+        this.redirectUser(scrabsterUser);
       }).catch(error => {
-        console.log(error);
+        console.log('handleLoggedOutUser error: ', error);
       });
+  }
+
+  redirectUser(scrabsterUser): void {
+    this.dataService.loading = false;
+    if (scrabsterUser.memberStatus === 'PENDING') {
+      this.router.navigate(['/waiting-room']);
+    } else if (['ACTIVE', 'ADMIN'].includes(scrabsterUser.memberStatus)) {
+      this.router.navigate(['/home']);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
 }
