@@ -64,7 +64,9 @@ export class HomeComponent implements OnInit {
     this.dataService.loading = true;
     const newGame: Game = this.gameService.createNewGame(users);
     this.dataService.setNewGame(newGame);
-    this.gameService.rackFill();
+    this.gameService.players.forEach(player => {
+      this.gameService.rackFill(player.rack);
+    });
     this.dataService.saveNewGame(newGame)
       .then(() => {
         this.dataService.loading = false;

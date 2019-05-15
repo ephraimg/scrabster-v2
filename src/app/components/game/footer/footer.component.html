@@ -1,9 +1,5 @@
-
 <mat-card [ngClass]="['footer', gameService.isFooterFixed ? 'fixed' : '']" (click)="handleFooterClick()">
-  <!-- <button mat-mini-fab color="accent" class="fix-footer-button" (click)="toggleFooter()">
-    <span *ngIf="!isFooterFixed">&#x0225A;</span>
-    <span *ngIf="isFooterFixed">&#x02259;</span>
-  </button> -->
+
   <div
     cdkDropList
     (cdkDropListDropped)="gameService.dropOnRack($event)"
@@ -13,60 +9,71 @@
     [id]="'testid'"
     class="ui-rack"
   >
-      <app-tile
-        cdkDrag
-        (cdkDragStarted)="gameService.dragStarted($event, tile)"
-        *ngFor="let tile of gameService.rack"
-        [tile]="tile"
-      >
-    </app-tile>
+    <app-tile
+      cdkDrag
+      [cdkDragDisabled]="gameService.gameOver"
+      (cdkDragStarted)="gameService.dragStarted($event, tile)"
+      *ngFor="let tile of gameService.rack"
+      [tile]="tile"
+    ></app-tile>
   </div>
-  
+
   <div class="button-row">
     <button
-        mat-stroked-button
-        class="compact"
-        (click)="shuffle($event)"
+      mat-stroked-button
+      class="compact"
+      (click)="shuffle($event)"
+      [class.disabled]="isButtonDisabled"
+      [disabled]="isButtonDisabled"
     >
-        Shuffle
+      Shuffle
     </button>
     <button
-        mat-stroked-button
-        class="compact"
-        [class.disabled]="!gameService.isCurrentPlayerUser()"
-        [disabled]="!gameService.isCurrentPlayerUser()"
-        (click)="clear($event)"
+      mat-stroked-button
+      class="compact"
+      [class.disabled]="isButtonDisabled"
+      [disabled]="isButtonDisabled"
+      (click)="clear($event)"
     >
       Clear
     </button>
     <button
-        mat-stroked-button
-        class="compact"
-        [class.disabled]="!gameService.isCurrentPlayerUser()"
-        [disabled]="!gameService.isCurrentPlayerUser()"
-        (click)="exchange($event)"
+      mat-stroked-button
+      class="compact"
+      [class.disabled]="isButtonDisabled"
+      [disabled]="isButtonDisabled"
+      (click)="exchange($event)"
     >
-        Trade
+      Trade
     </button>
     <button
-        mat-stroked-button
-        class="compact submit"
-        [class.disabled]="isSubmitDisabled"
-        [disabled]="isSubmitDisabled"
-        (click)="submit($event)"
-        >
-        Submit
+      mat-stroked-button
+      class="compact submit"
+      [class.disabled]="isSubmitDisabled"
+      [disabled]="isSubmitDisabled"
+      (click)="submit($event)"
+    >
+      Submit
     </button>
   </div>
-    <div class="footer-info">
-        <span>
-            Turn {{gameService.currentTurn}} - {{gameService.player.user.name}}
-        </span>
-        <span *ngIf="gameService.isCurrentPlayerUser()">
-            Pending score:
-            <span *ngIf="!gameService.dragging">
-                {{pendingScore}}
-            </span>
-        </span>
-    </div>
+
+  <div class="footer-info" *ngIf="!gameService.gameOver">
+    <span>
+      Turn {{gameService.currentTurn}} - {{gameService.player.user.name}}
+    </span>
+    <span *ngIf="gameService.isCurrentPlayerUser()">
+      Pending score:
+      <span *ngIf="!gameService.dragging">
+        {{pendingScore}}
+      </span>
+    </span>
+  </div>
+  <div class="footer-info" *ngIf="gameService.gameOver">
+    <span>
+      Game over!
+      {{gameService.isCurrentPlayerUser() ? 'You win' : gameService.winner.user.name + ' wins'}}
+      with {{gameService.winner.score}} points
+    </span>
+  </div>
+
 </mat-card>

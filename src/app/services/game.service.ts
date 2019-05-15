@@ -12,6 +12,10 @@ import {
   User,
   Tile,
   Square,
+  Rack,
+  Player,
+  Play,
+  Placement,
 } from 'src/interfaces/interfaces';
 import {
   mockUser1,
@@ -43,48 +47,53 @@ export class GameService {
     });
   }
 
-  get game() {
+  get game(): Game {
     return this.dataService.game;
   }
-  get play() {
+  get play(): Play {
     return this.playService.currentPlay;
   }
-  get user() {
+  get user(): User {
     return this.dataService.user;
   }
-  get player() {
+  get player(): Player {
     return this.playService.currentPlayer;
   }
-  get rack() {
+  get rack(): Rack {
+    // show rack of current player if that's the user
+    if (this.player.user.id === this.user.id) {
+      return this.player.rack;
+    }
+    // otherwise, find rack of player that's the user
     const userPlayer = this.players.find(player => {
       return player.user.id === this.user.id;
     });
     return userPlayer ? userPlayer.rack : [];
   }
-  get players() {
+  get players(): Player[] {
     return this.playService.players;
   }
-  get placements() {
+  get placements(): Placement[] {
     return this.playService.placements;
   }
-  get placedTiles() {
+  get placedTiles(): Tile[] {
     return this.placements.map(p => p.tile);
   }
-  get tilesToExchange() {
+  get tilesToExchange(): Tile[] {
     return this.playService.tilesToExchange;
   }
 
-  isCurrentPlayerUser() {
+  isCurrentPlayerUser(): boolean {
     return this.player && this.user
       ? this.player.user.id === this.user.id
       : false;
   }
 
-  toggleFooter() {
+  toggleFooter(): void {
     this.isFooterFixed = !this.isFooterFixed;
   }
 
-  createNewPlayer(user: User) {
+  createNewPlayer(user: User): Player {
     return {
       user: user,
       rack: [],
@@ -104,7 +113,7 @@ export class GameService {
     }
   }
 
-  selectTile(event, tile: Tile) {
+  selectTile(event, tile: Tile): boolean {
     event.stopPropagation();
     // Only let the current player select tiles
     if (this.user.id !== this.player.user.id) {
@@ -118,6 +127,7 @@ export class GameService {
       this.rackSwap(tile, this.selectedTile);
       this.selectedTile = null;
     }
+    return true;
   }
 
   selectSquareOrRack(target?: Square) {
@@ -155,7 +165,7 @@ export class GameService {
     this.selectedTile = null;
   }
 
-  dragStarted(e, tile: Tile) {
+  dragStarted(e, tile: Tile): void {
     this.selectedTile = tile;
     this.dragging = true;
   }
@@ -178,28 +188,28 @@ export class GameService {
     }
   }
 
-  rackSwap(tile1: Tile, tile2: Tile) {
-    const tile1Idx = this.rack.indexOf(tile1);
-    const tile2Idx = this.rack.indexOf(tile2);
-    this.rack[tile1Idx] = tile2;
-    this.rack[tile2Idx] = tile1;
-    return this.rack;
+  rackSwap(tile1: Tile, tile2: Tile, rack: Rack = this.rack): Rack {
+    const tile1Idx = rack.indexOf(tile1);
+    const tile2Idx = rack.indexOf(tile2);
+    rack[tile1Idx] = tile2;
+    rack[tile2Idx] = tile1;
+    return rack;
   }
 
-  rackRemove(tile: Tile) {
-    const tileIndex = this.rack.findIndex(el => el.id === tile.id);
-    this.rack.splice(tileIndex, 1);
-    return this.rack;
+  rackRemove(tile: Tile, rack: Rack = this.rack): Rack {
+    const tileIndex = rack.findIndex(el => el.id === tile.id);
+    rack.splice(tileIndex, 1);
+    return rack;
   }
 
-  rackAdd(tile: Tile) {
-    this.rack.push(tile);
-    return this.rack;
+  rackAdd(tile: Tile, rack: Rack = this.rack): Rack {
+    rack.push(tile);
+    return rack;
   }
 
-  rackFill() {
-    while (this.rackCount < 7 && this.bagService.count > 0) {
-      this.rackAdd(this.bagService.takeTile());
+  rackFill(rack: Rack = this.rack): Rack {
+    while (rack.length < 7 && this.bagService.count > 0) {
+      this.rackAdd(this.bagService.takeTile(), rack);
     }
     return this.rack;
   }
@@ -271,19 +281,19 @@ export class GameService {
     }
   }
 
-  get rackCount() {
+  get rackCount(): number {
     return this.rack.length;
   }
 
-  get playerCount() {
+  get playerCount(): number {
     return this.game.players.length;
   }
 
-  get currentTurn() {
+  get currentTurn(): number {
     return this.game ? this.game.playHistory.length + 1 : 0;
   }
 
-  get gameOver() {
+  get gameOver(): boolean {
     return this.bagService.count < 1 && this.game.players.some(player => (
       player.rack.length < 1
     ));
@@ -291,16 +301,26 @@ export class GameService {
 
   handleGameOver() {
     console.log('Game over!');
-    this.game.players.forEach(player => {
+    this.players.forEach(player => {
       const pointsLeft = player.rack.reduce((a, t) => a + t.points, 0);
       player.score -= pointsLeft;
       this.player.score += pointsLeft;
     })
     console.log(
-      `Scores:\n ${this.game.players.reduce((acc, player) => {
+      `Scores:\n ${this.players.reduce((acc, player) => {
         return acc + player.user.name + ': ' + player.score + '\n';
       }, '')}`
     );
+  }
+
+  get winner() {
+    if (!this.gameOver) {
+      throw new Error('Get winner error: Game still in progress!')
+    }
+    // winner is whoever is first to have no tiles while bag is empty
+    return this.players.find(player => {
+      return player.rack.length < 1;
+    });
   }
 
 }

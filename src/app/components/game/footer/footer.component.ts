@@ -36,8 +36,12 @@ export class FooterComponent {
     this.gameService.submitPlay();
   }
 
+  get isButtonDisabled() {
+    return !this.gameService.isCurrentPlayerUser() || this.gameService.gameOver;
+  }
+
   get isSubmitDisabled() {
-    if (!this.gameService.isCurrentPlayerUser()) {
+    if (!this.gameService.isCurrentPlayerUser() || this.gameService.gameOver) {
         return true;
     }
     if (this.playService.tilesToExchange.length > 0) {
