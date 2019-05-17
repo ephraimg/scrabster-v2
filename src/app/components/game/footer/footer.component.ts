@@ -68,4 +68,8 @@ export class FooterComponent {
       return 'Play not valid!';
   }
 
+  get isUserWinner(): boolean {
+    return this.gameService.user.id === this.gameService.winner.user.id;
+  }
+
 }

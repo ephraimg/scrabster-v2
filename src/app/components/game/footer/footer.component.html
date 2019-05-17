@@ -71,7 +71,7 @@
   <div class="footer-info" *ngIf="gameService.gameOver">
     <span>
       Game over!
-      {{gameService.isCurrentPlayerUser() ? 'You win' : gameService.winner.user.name + ' wins'}}
+      {{isUserWinner ? 'You win' : gameService.winner.user.name + ' wins'}}
       with {{gameService.winner.score}} points
     </span>
   </div>
