@@ -6,7 +6,7 @@
 </div>
 
 <div class="main">
-    <mat-card class="game-selection" *ngIf="isAdmin">
+    <mat-card class="game-selection" *ngIf="authService.isAdmin">
       <p> You are logged in as an administrator </p>
       <button mat-raised-button (click)="router.navigate(['/admin'])">Go to Admin page</button>
     </mat-card>
@@ -14,7 +14,7 @@
     <mat-card class="game-selection">
         <mat-form-field>
             <mat-select placeholder="Game" [(ngModel)]="selectedGameId">
-                <mat-option *ngFor="let game of games" [value]="game.id">
+                <mat-option *ngFor="let game of dms.games" [value]="game.id">
                   <span *ngFor="let player of game.players">{{ player.user.givenName }}, </span>
                     started {{ getDateGameCreated(game._id).toLocaleString("en-us") }}
                 </mat-option>

@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PlayService } from './play.service';
+import { DataModelService } from './data-model.service';
 
-describe('PlayService', () => {
+describe('DataModelService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: PlayService = TestBed.get(PlayService);
+    const service: DataModelService = TestBed.get(DataModelService);
     expect(service).toBeTruthy();
   });
 });

@@ -33,7 +33,7 @@
     [tile]="square.tile"
     cdkDrag
     [cdkDragDisabled]="isDragDisabled"
-    (cdkDragStarted)="gameService.dragStarted($event, square.tile)"
+    (cdkDragStarted)="mut.dragStarted($event, square.tile)"
 ></app-tile>
 
 <div *ngIf="square && square.bonus === 'star'" [ngClass]="'bonus-star'">

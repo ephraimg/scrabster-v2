@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BonusService } from './bonus.service';
+import { AjaxService } from './ajax.service';
 
-describe('BonusService', () => {
+describe('AjaxService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: BonusService = TestBed.get(BonusService);
+    const service: AjaxService = TestBed.get(AjaxService);
     expect(service).toBeTruthy();
   });
 });

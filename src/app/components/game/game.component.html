@@ -1,49 +1,42 @@
-
-<mat-sidenav-container *ngIf="gameService.game">
+<mat-sidenav-container *ngIf="dms.game">
 
   <mat-sidenav-content>
-    <button
-        cdkDrag
-        mat-mini-fab
-        color="accent"
-        class="sidenav-button-outer" 
-        (click)="sidenav.toggle()"
-    >
+    <button cdkDrag mat-mini-fab color="accent" class="sidenav-button-outer" (click)="sidenav.toggle()">
       <span>&#x02259;</span>
     </button>
     <app-header></app-header>
-    <mat-card *ngIf="windowWidth >= 600" [ngClass]="[gameService.isFooterFixed ? 'with-fixed' : '']">
+    <mat-card *ngIf="windowWidth >= 600" [ngClass]="[dms.isFooterFixed ? 'with-fixed' : '']">
       <app-board></app-board>
     </mat-card>
-    <div *ngIf="windowWidth < 600" [ngClass]="[gameService.isFooterFixed ? 'with-fixed' : '']">
-        <app-board></app-board>
+    <div *ngIf="windowWidth < 600" [ngClass]="[dms.isFooterFixed ? 'with-fixed' : '']">
+      <app-board></app-board>
     </div>
     <app-footer></app-footer>
   </mat-sidenav-content>
 
   <mat-sidenav #sidenav mode="over" fixedInViewport="true" autoFocus="false" closed>
     <div class="inset-card">
-        <h1>Game</h1>
-        <div *ngFor="let player of gameService.players">
-            {{player.user.name}}: {{player.score}}
-        </div>
-        <div *ngIf="gameService.isCurrentPlayerUser()">
-            Pending score:
-            <span *ngIf="!gameService.dragging">
-                {{pendingScore}}
-            </span>
-        </div>
+      <h1>Game</h1>
+      <div *ngFor="let player of dms.players">
+        {{player.user.name}}: {{player.score}}
+      </div>
+      <div *ngIf="dms.isCurrentPlayerUser">
+        Pending score:
+        <span *ngIf="!dms.dragging">
+          {{pendingScore}}
+        </span>
+      </div>
     </div>
     <div class="inset-card">
-        <h1>Navigation</h1>
-        <button mat-raised-button routerLink="/home" routerLinkActive="active">Home</button>
-        <button mat-raised-button routerLink="/rules">Rules</button>
-        <button mat-raised-button routerLink="/statistics">Statistics</button>
+      <h1>Navigation</h1>
+      <button mat-raised-button routerLink="/home" routerLinkActive="active">Home</button>
+      <button mat-raised-button routerLink="/rules">Rules</button>
+      <button mat-raised-button routerLink="/statistics">Statistics</button>
     </div>
     <div class="inset-card">
-        <h1>Settings</h1>
-        <mat-slide-toggle [checked]="isFooterFixed" (change)="toggleFooter()">Dock tile rack</mat-slide-toggle>
-        <mat-slide-toggle disabled (change)="toggleEmailNotifications()">Email notifications</mat-slide-toggle>
+      <h1>Settings</h1>
+      <mat-slide-toggle [checked]="isFooterFixed" (change)="toggleFooter()">Dock tile rack</mat-slide-toggle>
+      <mat-slide-toggle disabled (change)="toggleEmailNotifications()">Email notifications</mat-slide-toggle>
     </div>
     <button mat-mini-fab color="accent" class="sidenav-button-inner" (click)="sidenav.toggle()">
       <span>&#x0225A;</span>

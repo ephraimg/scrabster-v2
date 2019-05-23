@@ -8,9 +8,9 @@
             *ngFor="let square of arrayOf15; index as j;"
             [id]="'square-' + i + '-' + j"
             [selectedTile]="selectedTile"
-            [square]="boardService.getSquare(i, j)"
+            [square]="dms.getSquare(i, j)"
             cdkDropList
-            (cdkDropListDropped)="gameService.dropOnSquare($event, boardService.getSquare(i, j))"
+            (cdkDropListDropped)="mut.dropOnSquare($event, dms.getSquare(i, j))"
             [cdkDropListConnectedTo]="['testid']"
         ></app-square>
     </div>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { GameService } from '../../../services/game.service';
-import { PlayService } from '../../../services/play.service';
 import { PlayValidationService } from '../../../services/play-validation.service';
+import { DataModelService } from '../../../services/data-model.service';
+import { DataMutationsService } from '../../../services/data-mutations.service';
 
 @Component({
   selector: 'app-footer',
@@ -11,65 +11,45 @@ import { PlayValidationService } from '../../../services/play-validation.service
 export class FooterComponent {
 
   constructor(
-      private gameService: GameService,
-      private playService: PlayService,
-      private playValidationService: PlayValidationService
-    ) {}
-
-  handleFooterClick() {
-    this.gameService.selectSquareOrRack(null);
-  }
-
-  exchange(e) {
-    this.gameService.exchangeTile();
-  }
-
-  shuffle(e) {
-    this.gameService.shuffle();
-  }
-
-  clear(e) {
-    this.gameService.playClear();
-  }
-
-  submit(e) {
-    this.gameService.submitPlay();
-  }
+    private playValidationService: PlayValidationService,
+    public dms: DataModelService,
+    public mut: DataMutationsService,
+  ) { }
 
   get isButtonDisabled() {
-    return !this.gameService.isCurrentPlayerUser() || this.gameService.gameOver;
+    return !this.dms.isCurrentPlayerUser || this.dms.gameOver;
   }
 
   get isSubmitDisabled() {
-    if (!this.gameService.isCurrentPlayerUser() || this.gameService.gameOver) {
-        return true;
+    if (!this.dms.isCurrentPlayerUser || this.dms.gameOver) {
+      return true;
     }
-    if (this.playService.tilesToExchange.length > 0) {
-        return false;
+    if (this.dms.tilesToExchange.length > 0) {
+      return false;
     }
-    if (this.playService.placements.length > 0 && 
-        this.playValidationService.isValid(this.gameService.play)
+    if (this.dms.placements.length > 0 &&
+      this.playValidationService.isValid(this.dms.play)
     ) {
-        return false;
+      return false;
     }
     return true;
   }
 
   get pendingScore() {
-      if (this.playService.placements.length < 1) {
-          return 'Waiting...';
-      }
-      if (this.playService.tilesToExchange.length > 0) {
-          return '0 (exchanging tiles)';
-      }
-      if (this.playValidationService.isValid(this.gameService.play)) {
-          return this.playService.getScore(this.gameService.play);
-      }
-      return 'Play not valid!';
+    if (this.dms.placements.length < 1) {
+      return 'Waiting...';
+    }
+    if (this.dms.tilesToExchange.length > 0) {
+      return '0 (exchanging tiles)';
+    }
+    if (this.playValidationService.isValid(this.dms.play)) {
+      return this.playValidationService.getScore(this.dms.play);
+    }
+    return 'Play not valid!';
   }
 
   get isUserWinner(): boolean {
-    return this.gameService.user.id === this.gameService.winner.user.id;
+    return this.dms.user.id === this.dms.winner.user.id;
   }
 
 }

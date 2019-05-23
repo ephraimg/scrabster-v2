@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DataService } from 'src/app/services/data.service';
+import { DataModelService } from 'src/app/services/data-model.service';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +10,6 @@ export class AppComponent {
 
   title = 'scrabster-v2';
 
-  constructor(public dataService: DataService) { }
+  constructor(public dms: DataModelService) { }
 
 }

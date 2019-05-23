@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Renderer2, ElementRef, HostListener } from '@angular/core';
-import { GameService } from '../../../services/game.service';
 import { Tile, Square } from 'src/interfaces/interfaces';
+import { DataModelService } from 'src/app/services/data-model.service';
+import { DataMutationsService } from 'src/app/services/data-mutations.service';
 
 const bonusMessages = {
   'tws': ['TRIPLE', 'WORD', 'SCORE'],
@@ -25,39 +26,40 @@ const triangleCounts = {
 })
 export class SquareComponent implements OnInit {
 
-    @Input() square: Square;
-    @Input() selectedTile: Tile;
+  @Input() square: Square;
+  @Input() selectedTile: Tile;
 
-    bonusClass: string;
-    bonusWords: string[];
-    triangleCount: number;
+  bonusClass: string;
+  bonusWords: string[];
+  triangleCount: number;
 
-    constructor(
-        public gameService: GameService,
-        private renderer: Renderer2,
-        private el: ElementRef
-    ) {}
+  constructor(
+    public dms: DataModelService,
+    public mut: DataMutationsService,
+    private renderer: Renderer2,
+    private el: ElementRef
+  ) { }
 
-    ngOnInit() {
-        this.bonusWords = this.square ? bonusMessages[this.square.bonus] : [];
-        this.triangleCount = this.square ? triangleCounts[this.square.bonus] : 0;
-        this.bonusClass = this.square ? this.square.bonus : '';
-        // star class messes up appearance of tile. TODO: fix that!
-        if (this.bonusClass === 'star' && this.square.tile) { this.bonusClass = 'dws'; }
-        // add classes to host element
-        if (this.bonusClass !== '') { this.renderer.addClass(this.el.nativeElement, this.bonusClass); }
-        this.renderer.addClass(this.el.nativeElement, 'noselect');
-    }
+  ngOnInit() {
+    this.bonusWords = this.square ? bonusMessages[this.square.bonus] : [];
+    this.triangleCount = this.square ? triangleCounts[this.square.bonus] : 0;
+    this.bonusClass = this.square ? this.square.bonus : '';
+    // star class messes up appearance of tile. TODO: fix that!
+    if (this.bonusClass === 'star' && this.square.tile) { this.bonusClass = 'dws'; }
+    // add classes to host element
+    if (this.bonusClass !== '') { this.renderer.addClass(this.el.nativeElement, this.bonusClass); }
+    this.renderer.addClass(this.el.nativeElement, 'noselect');
+  }
 
-    @HostListener('click')
-    handleClick() {
-        this.gameService.selectSquareOrRack(this.square);
-    }
+  @HostListener('click')
+  handleClick() {
+    this.mut.selectSquareOrRack(this.square);
+  }
 
-    get isDragDisabled() {
-        return this.gameService.placedTiles
-            ? !this.gameService.placedTiles.includes(this.square.tile)
-            : false;
-    }
+  get isDragDisabled() {
+    return this.dms.placedTiles
+      ? !this.dms.placedTiles.includes(this.square.tile)
+      : false;
+  }
 
 }

@@ -1,5 +1,5 @@
-import { BonusService } from './app/services/bonus.service';
 
+import { bonuses } from './constants';
 import {
     Board,
     Game,
@@ -105,10 +105,9 @@ export const mockPlay2: Play = {
     score: 8
 }
 
-const bonusService = new BonusService();
 const mockSquares = Array(15).fill(null).map((wholeRow, row) => {
     return Array(15).fill(null).map((sqInRow, col) => {
-        return { row, col, bonus: bonusService.getBonus(row, col), tile: null }; });
+        return { row, col, bonus: bonuses[row][col], tile: null }; });
 });
 mockSquares[7][3].tile = { "letter":"Q", "points":10, "id":"tile-Q-0" };
 mockSquares[7][4].tile = { "letter":"U", "points":1, "id":"tile-U-0" };

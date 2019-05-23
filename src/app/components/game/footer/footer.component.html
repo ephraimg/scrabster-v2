@@ -1,19 +1,19 @@
-<mat-card [ngClass]="['footer', gameService.isFooterFixed ? 'fixed' : '']" (click)="handleFooterClick()">
+<mat-card [ngClass]="['footer', dms.isFooterFixed ? 'fixed' : '']" (click)="this.mut.selectSquareOrRack(null)">
 
   <div
     cdkDropList
-    (cdkDropListDropped)="gameService.dropOnRack($event)"
-    [cdkDropListConnectedTo]="gameService.allDropLists"
-    [cdkDropListData]="gameService.rack"
+    (cdkDropListDropped)="mut.dropOnRack($event)"
+    [cdkDropListConnectedTo]="dms.allDropLists"
+    [cdkDropListData]="dms.rack"
     cdkDropListOrientation="horizontal"
     [id]="'testid'"
     class="ui-rack"
   >
     <app-tile
       cdkDrag
-      [cdkDragDisabled]="gameService.gameOver"
-      (cdkDragStarted)="gameService.dragStarted($event, tile)"
-      *ngFor="let tile of gameService.rack"
+      [cdkDragDisabled]="dms.gameOver"
+      (cdkDragStarted)="mut.dragStarted($event, tile)"
+      *ngFor="let tile of dms.rack"
       [tile]="tile"
     ></app-tile>
   </div>
@@ -22,9 +22,7 @@
     <button
       mat-stroked-button
       class="compact"
-      (click)="shuffle($event)"
-      [class.disabled]="isButtonDisabled"
-      [disabled]="isButtonDisabled"
+      (click)="mut.shuffle()"
     >
       Shuffle
     </button>
@@ -33,7 +31,7 @@
       class="compact"
       [class.disabled]="isButtonDisabled"
       [disabled]="isButtonDisabled"
-      (click)="clear($event)"
+      (click)="mut.playClear($event)"
     >
       Clear
     </button>
@@ -42,7 +40,7 @@
       class="compact"
       [class.disabled]="isButtonDisabled"
       [disabled]="isButtonDisabled"
-      (click)="exchange($event)"
+      (click)="mut.exchange()"
     >
       Trade
     </button>
@@ -51,28 +49,28 @@
       class="compact submit"
       [class.disabled]="isSubmitDisabled"
       [disabled]="isSubmitDisabled"
-      (click)="submit($event)"
+      (click)="mut.submitPlay()"
     >
       Submit
     </button>
   </div>
 
-  <div class="footer-info" *ngIf="!gameService.gameOver">
+  <div class="footer-info" *ngIf="!dms.gameOver">
     <span>
-      Turn {{gameService.currentTurn}} - {{gameService.player.user.name}}
+      Turn {{dms.currentTurn}} - {{dms.currentPlayer.user.name}}
     </span>
-    <span *ngIf="gameService.isCurrentPlayerUser()">
+    <span *ngIf="dms.isCurrentPlayerUser">
       Pending score:
-      <span *ngIf="!gameService.dragging">
+      <span *ngIf="!dms.dragging">
         {{pendingScore}}
       </span>
     </span>
   </div>
-  <div class="footer-info" *ngIf="gameService.gameOver">
+  <div class="footer-info" *ngIf="dms.gameOver">
     <span>
       Game over!
-      {{isUserWinner ? 'You win' : gameService.winner.user.name + ' wins'}}
-      with {{gameService.winner.score}} points
+      {{isUserWinner ? 'You win' : dms.winner.user.name + ' wins'}}
+      with {{dms.winner.score}} points
     </span>
   </div>
 

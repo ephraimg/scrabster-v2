@@ -2,29 +2,34 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import { AuthService } from './auth.service';
-import { DataService } from './data.service';
+import { AjaxService } from './ajax.service';
+import { DataModelService } from './data-model.service';
 
 @Injectable({ providedIn: 'root' })
 export class LoggedInGuard implements CanActivate {
   constructor(
     public auth: AuthService,
-    public dataService: DataService,
+    public ajaxService: AjaxService,
+    public dms: DataModelService,
     public router: Router
   ) {}
   canActivate(): Promise<boolean> | boolean {
-    if (this.auth.isAuthenticated()) { return true; }
+    if (this.auth.isAuthenticated) { return true; }
     const userId = window.localStorage.getItem('scrabster-id');
-    if (!this.auth.isAuthenticated() && userId) {
-      return this.dataService.fetchUser(userId)
-        .then(() => true)
-        .catch(err => {
-          console.log('LoggedInGuard error: ', err);
-          this.router.navigate(['login']);
-          return false;
-        });
+    if (!userId) {
+      this.router.navigate(['login']);
+      return false;
     }
-    this.router.navigate(['login']);
-    return false;
+    return this.ajaxService.fetchUser(userId)
+      .then(user => {
+        this.dms.user = user;
+        return true;
+      })
+      .catch(err => {
+        console.log('LoggedInGuard error: ', err);
+        this.router.navigate(['login']);
+        return false;
+      });
   }
 }
 
@@ -32,22 +37,26 @@ export class LoggedInGuard implements CanActivate {
 export class AdminGuard implements CanActivate {
   constructor(
     public auth: AuthService,
-    public dataService: DataService,
+    public ajaxService: AjaxService,
+    public dms: DataModelService,
     public router: Router
   ) { }
   canActivate(): Promise<boolean> | boolean {
-    if (this.auth.isAdmin()) { return true; }
+    if (this.auth.isAdmin) { return true; }
     const userId = window.localStorage.getItem('scrabster-id');
-    if (!this.auth.isAdmin() && userId) {
-      return this.dataService.fetchUser(userId)
-        .then(() => true)
-        .catch(err => {
-          console.log('AdminGuard error: ', err);
-          this.router.navigate(['login']);
-          return false;  
-        });
+    if (!userId) {
+      this.router.navigate(['login']);
+      return false;
     }
-    this.router.navigate(['login']);
-    return false;
+    return this.ajaxService.fetchUser(userId)
+      .then(scrabsterUser => {
+        this.dms.user = scrabsterUser;
+        return true;
+      })
+      .catch(err => {
+        console.log('AdminGuard error: ', err);
+        this.router.navigate(['login']);
+        return false;  
+      });
   }
 }

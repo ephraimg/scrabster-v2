@@ -1,38 +1,34 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 
+import { DataModelService } from '../services/data-model.service';
 import { Bag, Board, Player, Play, Game, User, ExtractedGoogleUser } from 'src/interfaces/interfaces';
 import { emptyUser } from '../../mock-data';
 
 @Injectable({
     providedIn: 'root'
 })
-export class DataService {
+export class AjaxService {
 
-  private currentUser: User; // = emptyUser;
-  private currentGame: Game;
-  private users: User[] = [];
-  private games: Game[] = [];
-  loading = false;
-
-  constructor() {}
+  constructor(
+    private dms: DataModelService,
+  ) {}
 
   fetchGame(id: string): Promise<any> {
     return axios.get(`/games?id=${id}`)
       .then(({ data }) => {
         // console.log('game from server: ', data[0]);
-        this.currentGame = data[0];
         return data[0];
       })
       .catch(err => { console.log('game fetching error: ', err); })
   }
 
-  saveNewGame(game: Game = this.currentGame) {
+  saveNewGame(game: Game = this.dms.game) {
     return axios.post('/games', game)
       .catch(err => { console.log('saveNewGame - error: ', err); })
   }
 
-  saveUpdatedGame(game: Game = this.currentGame) {
+  saveUpdatedGame(game: Game = this.dms.game) {
     return axios.put('/games', game)
       .catch(err => { console.log('saveUpdatedGame - error: ', err); })
   }
@@ -45,7 +41,6 @@ export class DataService {
           return null;
         }
         // console.log('fetchUser - returning user found on server: ', data[0]);
-        this.currentUser = data[0];
         return data[0];
       })
       .catch(err => { console.log('fetchUser - user fetching error: ', err); })
@@ -84,7 +79,6 @@ export class DataService {
     return axios.get('/games')
       .then(({ data }) => {
         // console.log('games from server: ', data);
-        this.games = data;
         return data;
       })
       .catch(err => { console.log('games fetching error: ', err); })
@@ -94,7 +88,6 @@ export class DataService {
     return axios.get('/users')
       .then(({ data }) => {
         // console.log('users from server: ', data);
-        this.users = data;
         return data;
       })
       .catch(err => { console.log('user fetching error: ', err); })
@@ -112,58 +105,9 @@ export class DataService {
       })
       .then(user => {
         // console.log('fetchOrCreateUser - Returning user:', user);
-        this.currentUser = user;
         return Promise.resolve(user);
       })
       .catch(err => { console.log('fetchOrCreateUser - error: ', err); })
-  }
-
-  setNewGame(game: Game) {
-    this.currentGame = game;
-  }
-
-  get game(): Game {
-    return this.currentGame;
-  }
-
-  get allGames(): Game[] {
-    return this.games;
-  }
-
-  get bag(): Bag {
-    return this.currentGame.bag;
-  }
-
-  set bag(bagToSave: Bag) {
-    this.currentGame.bag = bagToSave;
-  }
-
-  get board(): Board {
-    return this.currentGame ? this.currentGame.board : [[]];
-  }
-
-  set board(boardToSave: Board) {
-    this.currentGame.board = boardToSave;
-  }
-
-  get players(): Player[] {
-    return this.currentGame ? this.currentGame.players : [];
-  }
-
-  get playHistory(): Play[] {
-    return this.currentGame ? this.currentGame.playHistory : [];
-  }
-
-  get user(): User {
-    return this.currentUser;
-  }
-
-  set user(user) {
-    this.currentUser = user;
-  }
-
-  get allUsers(): User[] {
-    return this.users;
   }
 
 }

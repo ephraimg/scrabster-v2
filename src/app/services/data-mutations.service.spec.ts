@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BoardService } from './board.service';
+import { DataMutationsService } from './data-mutations.service';
 
-describe('BoardService', () => {
+describe('DataMutationsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: BoardService= TestBed.get(BoardService);
+    const service: DataMutationsService = TestBed.get(DataMutationsService);
     expect(service).toBeTruthy();
   });
 });

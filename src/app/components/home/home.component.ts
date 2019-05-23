@@ -1,15 +1,16 @@
 import { Component, OnInit, Renderer2, ElementRef, ViewChild, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { DataService } from '../../services/data.service';
+import { AjaxService } from '../../services/ajax.service';
 import { AuthService } from '../../services/auth.service';
-import { GameService } from '../../services/game.service';
 import { User, Game } from 'src/interfaces/interfaces';
+import { DataMutationsService } from 'src/app/services/data-mutations.service';
+import { DataModelService } from 'src/app/services/data-model.service';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
 
@@ -24,14 +25,21 @@ export class HomeComponent implements OnInit {
   selectedOpponent: User;
 
   constructor(
-    public dataService: DataService,
-    private authService: AuthService,
-    private gameService: GameService,
+    public ajaxService: AjaxService,
+    private mut: DataMutationsService,
+    public dms: DataModelService,
+    public authService: AuthService,
     private router: Router,
     private renderer: Renderer2
   ) {
-      this.dataService.fetchAllGames();
-      this.dataService.fetchAllUsers();
+    this.ajaxService.fetchAllGames()
+      .then(games => {
+        this.dms.games = games;
+      });
+    this.ajaxService.fetchAllUsers()
+      .then(users => {
+        this.dms.users = users;
+      });
   }
 
   ngOnInit() {
@@ -49,38 +57,30 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  get games() {
-      return this.dataService.allGames;
-  }
-
   get opponents() {
-      return this.dataService.allUsers
-        .filter(user => !['PENDING', 'REJECTED'].includes(user.memberStatus));
+    return this.dms.users
+      .filter(user => !['PENDING', 'REJECTED'].includes(user.memberStatus));
   }
 
   handleNewGameClick() {
-    const users = [this.dataService.user, this.selectedOpponent];
+    const users = [this.dms.user, this.selectedOpponent];
     if (!this.selectedOpponent) { return; }
-    this.dataService.loading = true;
-    const newGame: Game = this.gameService.createNewGame(users);
-    this.dataService.setNewGame(newGame);
-    this.gameService.players.forEach(player => {
-      this.gameService.rackFill(player.rack);
+    this.dms.loading = true;
+    const newGame: Game = this.mut.createNewGame(users);
+    this.dms.game = newGame;
+    this.dms.players.forEach(player => {
+      this.mut.rackFill(player.rack);
     });
-    this.dataService.saveNewGame(newGame)
+    this.ajaxService.saveNewGame(newGame)
       .then(() => {
-        this.dataService.loading = false;
+        this.dms.loading = false;
         this.router.navigate(['/game', newGame.id]);
       });
   }
 
   handleResumeGameClick() {
-      if (!this.selectedGameId) { return; }
-      this.router.navigate(['/game', this.selectedGameId]);
-  }
-
-  get isAdmin() {
-    return this.authService.isAdmin();
+    if (!this.selectedGameId) { return; }
+    this.router.navigate(['/game', this.selectedGameId]);
   }
 
   getDateGameCreated(objectId) {

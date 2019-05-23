@@ -1,63 +1,64 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { DataService } from '../../services/data.service';
-import { GameService } from '../../services/game.service';
-import { PlayService } from '../../services/play.service';
+import { AjaxService } from '../../services/ajax.service';
 import { PlayValidationService } from '../../services/play-validation.service';
+import { DataModelService } from '../../services/data-model.service';
+import { DataMutationsService } from '../../services/data-mutations.service';
 
 @Component({
-    selector: 'app-game',
-    templateUrl: './game.component.html',
-    styleUrls: ['./game.component.scss']
+  selector: 'app-game',
+  templateUrl: './game.component.html',
+  styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
 
-    windowWidth: number;
+  windowWidth: number;
 
-    constructor(
-        private dataService: DataService,
-        private gameService: GameService,
-        private playService: PlayService,
-        private playValidationService: PlayValidationService,
-        private route: ActivatedRoute,
-    ) {
-      this.dataService.loading = true;
-    }
+  constructor(
+    private ajaxService: AjaxService,
+    private playValidationService: PlayValidationService,
+    private dms: DataModelService,
+    private mut: DataMutationsService,
+    private route: ActivatedRoute,
+  ) {
+    this.dms.loading = true;
+  }
 
-    ngOnInit() {
-        this.windowWidth = window.innerWidth;
-        const id = this.route.snapshot.paramMap.get('id');
-        // todo - check if game is already loaded to avoid fetching
-        this.dataService.fetchGame(id)
-          .then(() => {
-            this.playService.playNext();
-            this.dataService.loading = false;
-          });
-    }
+  ngOnInit() {
+    this.windowWidth = window.innerWidth;
+    const id = this.route.snapshot.paramMap.get('id');
+    // todo - check if game is already loaded to avoid fetching
+    this.ajaxService.fetchGame(id)
+      .then(game => {
+        this.dms.game = game;
+        this.mut.playNext();
+        this.dms.loading = false;
+      });
+  }
 
-    toggleFooter() {
-        this.gameService.toggleFooter();
-    }
+  toggleFooter() {
+    this.mut.toggleFooter();
+  }
 
-    toggleEmailNotifications() {
-        console.log('Toggled email notifications');
-    }
+  toggleEmailNotifications() {
+    console.log('Toggled email notifications');
+  }
 
-    get isFooterFixed() {
-        return this.gameService.isFooterFixed;
-    }
+  get isFooterFixed() {
+    return this.dms.isFooterFixed;
+  }
 
-    get pendingScore() {
-        if (this.playService.placements.length < 1) {
-            return 'Waiting...';
-        }
-        if (this.playService.tilesToExchange.length > 0) {
-            return '0 (exchanging tiles)';
-        }
-        if (this.playValidationService.isValid(this.gameService.play)) {
-            return this.playService.getScore(this.gameService.play);
-        }
-        return 'Play not valid!';
+  get pendingScore() {
+    if (this.dms.placements.length < 1) {
+      return 'Waiting...';
     }
+    if (this.dms.tilesToExchange.length > 0) {
+      return '0 (exchanging tiles)';
+    }
+    if (this.playValidationService.isValid(this.dms.play)) {
+      return this.playValidationService.getScore(this.dms.play);
+    }
+    return 'Play not valid!';
+  }
 }

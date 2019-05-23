@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from 'src/app/services/data.service';
+import { AjaxService } from 'src/app/services/ajax.service';
+import { DataModelService } from 'src/app/services/data-model.service';
 
 @Component({
   selector: 'app-admin',
@@ -10,22 +11,28 @@ export class AdminComponent implements OnInit {
 
   private userApprovals;
 
-  constructor(public dataService: DataService) { }
+  constructor(
+    public ajaxService: AjaxService,
+    public dms: DataModelService,
+  ) { }
 
   ngOnInit() {
-    this.dataService.fetchAllUsers();
+    this.ajaxService.fetchAllUsers()
+      .then(users => {
+        this.dms.users = users;
+      });
     this.userApprovals = {};
   }
 
   activateUser(userId) {
-    this.dataService.activateUser(userId)
+    this.ajaxService.activateUser(userId)
       .then(result => {
         if (result.ok = 1) { this.userApprovals[userId] = 'ACTIVE'; }
       });
   }
 
   rejectUser(userId) {
-    this.dataService.rejectUser(userId)
+    this.ajaxService.rejectUser(userId)
       .then(result => {
         if (result.ok = 1) { this.userApprovals[userId] = 'REJECTED'; }
       });;

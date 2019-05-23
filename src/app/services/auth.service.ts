@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
-import { DataService } from './data.service';
 import { ExtractedGoogleUser } from '../../interfaces/interfaces';
+import { DataModelService } from './data-model.service';
 
 declare const gapi: any;
 
@@ -10,33 +10,27 @@ export class AuthService {
 
   readonly clientId = '49734647833-v72mrldilf6fhvhfg42atmo1lgnblu87.apps.googleusercontent.com';
   private auth2: any;
-  user: any;
 
-  constructor(private dataService: DataService) {
+  constructor(
+    private dms: DataModelService
+  ) {
     gapi.load('auth2', () => {
-      gapi.auth2.init({
-        client_id: this.clientId,
-        scope: 'profile'
-      }).then((auth2) => {
-        this.auth2 = auth2;
-      });
+      gapi.auth2.init({ client_id: this.clientId, scope: 'profile' })
+        .then((auth2) => { this.auth2 = auth2; });
     });
-    // this.user = JSON.parse(localStorage.getItem('user'));
   }
 
   googleSignIn(): Promise<any> {
     if (this.auth2.isSignedIn.get()) {
-      this.user = this.extractUser(this.auth2.currentUser.get());
-      return Promise.resolve(this.user);
+      const user = this.extractUser(this.auth2.currentUser.get());
+      return Promise.resolve(user);
     }
-
     return new Promise((resolve, reject) => {
       this.auth2.isSignedIn.listen(signedIn => {
         if (signedIn) {
-          this.user = this.extractUser(this.auth2.currentUser.get());
-          resolve(this.user);
+          resolve(this.extractUser(this.auth2.currentUser.get()));
         } else {
-          reject('sign-in error');
+          reject('Sign-in error');
         }
       });
       this.auth2.signIn();
@@ -56,19 +50,18 @@ export class AuthService {
   }
 
   signOut(): void {
-    this.user = null;
-    // localStorage.removeItem('user');
+    this.dms.user = null;
+    localStorage.removeItem('scrabster-id');
     this.auth2.isSignedIn.listen(null);
     this.auth2.signOut();
   }
 
-  public isAuthenticated(): boolean {
-    // console.log(this.user);
-    return !!this.user || !!this.dataService.user;
+  get isAuthenticated(): boolean {
+    return !!this.dms.user;
   }
 
-  public isAdmin(): boolean {
-    return this.dataService.user.memberStatus === 'ADMIN';
+  get isAdmin(): boolean {
+    return !this.isAuthenticated && this.dms.user.memberStatus === 'ADMIN';
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BoardService } from 'src/app/services/board.service';
-import { GameService } from 'src/app/services/game.service';
+import { DataModelService } from 'src/app/services/data-model.service';
+import { DataMutationsService } from 'src/app/services/data-mutations.service';
 
 @Component({
   selector: 'app-board',
@@ -9,11 +9,11 @@ import { GameService } from 'src/app/services/game.service';
 })
 export class BoardComponent {
 
-    arrayOf15 = Array(15).fill(null);
+  arrayOf15 = Array(15).fill(null);
 
-    constructor(
-        public boardService: BoardService,
-        public gameService: GameService
-    ) {}
+  constructor(
+    public dms: DataModelService,
+    public mut: DataMutationsService
+  ) { }
 
 }
