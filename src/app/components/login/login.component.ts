@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { AjaxService } from '../../services/ajax.service';
 import { DataModelService } from 'src/app/services/data-model.service';
@@ -11,12 +11,21 @@ import { DataModelService } from 'src/app/services/data-model.service';
 })
 export class LoginComponent {
 
+  destination: string = '/home';
+
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthService,
     public ajaxService: AjaxService,
     public dms: DataModelService,
-  ) { }
+  ) {
+    this.route.queryParams.subscribe(params => {
+      this.destination = params['destination']
+        ? params['destination']
+        : this.destination;
+    });
+  }
 
   signIn(): void {
     this.dms.loading = true;
@@ -56,9 +65,7 @@ export class LoginComponent {
     if (scrabsterUser.memberStatus === 'PENDING') {
       this.router.navigate(['/waiting-room']);
     } else if (['ACTIVE', 'ADMIN'].includes(scrabsterUser.memberStatus)) {
-      this.router.navigate(['/home']);
-    } else {
-      this.router.navigate(['/login']);
+      this.router.navigate([this.destination]);
     }
   }
 
