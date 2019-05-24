@@ -28,7 +28,7 @@ export class FooterComponent {
       return false;
     }
     if (this.dms.placements.length > 0 &&
-      this.playValidationService.isValid(this.dms.play)
+      this.playValidationService.isValid(this.dms.board, this.dms.play)
     ) {
       return false;
     }
@@ -42,8 +42,8 @@ export class FooterComponent {
     if (this.dms.tilesToExchange.length > 0) {
       return '0 (exchanging tiles)';
     }
-    if (this.playValidationService.isValid(this.dms.play)) {
-      return this.playValidationService.getScore(this.dms.play);
+    if (this.playValidationService.isValid(this.dms.board, this.dms.play)) {
+      return this.playValidationService.getScore(this.dms.board, this.dms.play);
     }
     return 'Play not valid!';
   }

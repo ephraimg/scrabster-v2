@@ -19,7 +19,7 @@ export class GameComponent implements OnInit {
     private ajaxService: AjaxService,
     private playValidationService: PlayValidationService,
     private dms: DataModelService,
-    private mut: DataMutationsService,
+    public mut: DataMutationsService,
     private route: ActivatedRoute,
   ) {
     this.dms.loading = true;
@@ -37,16 +37,8 @@ export class GameComponent implements OnInit {
       });
   }
 
-  toggleFooter() {
-    this.mut.toggleFooter();
-  }
-
   toggleEmailNotifications() {
     console.log('Toggled email notifications');
-  }
-
-  get isFooterFixed() {
-    return this.dms.isFooterFixed;
   }
 
   get pendingScore() {
@@ -56,8 +48,8 @@ export class GameComponent implements OnInit {
     if (this.dms.tilesToExchange.length > 0) {
       return '0 (exchanging tiles)';
     }
-    if (this.playValidationService.isValid(this.dms.play)) {
-      return this.playValidationService.getScore(this.dms.play);
+    if (this.playValidationService.isValid(this.dms.board, this.dms.play)) {
+      return this.playValidationService.getScore(this.dms.board, this.dms.play);
     }
     return 'Play not valid!';
   }

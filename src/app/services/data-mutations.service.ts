@@ -308,12 +308,12 @@ export class DataMutationsService {
       // now currentPlayer has changed!  ???
       this.ajaxService.saveUpdatedGame();
     }
-    if (this.dms.placements.length > 0 && this.playValidationService.isValid(this.dms.play)) {
+    if (this.dms.placements.length > 0 && this.playValidationService.isValid(this.dms.board, this.dms.play)) {
       // the player is trying to make a play
       this.rackFill();
-      this.dms.play.score = this.playValidationService.getScore(this.dms.play);
+      this.dms.play.score = this.playValidationService.getScore(this.dms.board, this.dms.play);
       this.dms.currentPlayer.score += this.dms.play.score;
-      const plainWords = this.playValidationService.getPlainWords(this.dms.play).join(', ');
+      const plainWords = this.playValidationService.getPlainWords(this.dms.board, this.dms.play).join(', ');
       console.log(`${this.dms.currentPlayer.user.name}'s play: ${this.dms.play.score} for ${plainWords}`);
       this.dms.playHistory.push(_clone(this.dms.play));
       // now currentPlayer has changed! ???
