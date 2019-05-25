@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import axios from 'axios';
 
 import { DataModelService } from '../services/data-model.service';
-import { Bag, Board, Player, Play, Game, User, ExtractedGoogleUser } from 'src/interfaces/interfaces';
+import { Game, User, ExtractedGoogleUser, NewMoveEmailPayload } from 'src/interfaces/interfaces';
 import { emptyUser } from '../../mock-data';
 
 @Injectable({
@@ -57,6 +57,11 @@ export class AjaxService {
       .catch(err => { console.log('createUser - error: ', err); })
   }
 
+  saveUpdatedUser(user: User = this.dms.user): Promise<any> {
+    return axios.put('/users', user)
+      .catch(err => { console.log('saveUpdatedGame - error: ', err); })
+  }
+
   activateUser(userId: string): Promise<any> {
     return axios.put('/users', { id: userId, memberStatus: 'ACTIVE' })
       .then(({ data }) => {
@@ -108,6 +113,15 @@ export class AjaxService {
         return Promise.resolve(user);
       })
       .catch(err => { console.log('fetchOrCreateUser - error: ', err); })
+  }
+
+  sendNewMoveEmail(payload: NewMoveEmailPayload): Promise<any> {
+    return axios.post('/email', payload)
+      .then(({ data }) => {
+        // console.log('sendNewMoveEmail - data: ', data);
+        return Promise.resolve(data);
+      })
+      .catch(err => { console.log('user update error: ', err); })
   }
 
 }

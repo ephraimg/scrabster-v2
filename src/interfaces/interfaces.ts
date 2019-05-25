@@ -72,3 +72,8 @@ export interface Game {
 export interface Board extends Array<Array<Square>> { };
 
 export interface Bag extends Array<Tile> { };
+
+export interface NewMoveEmailPayload {
+  game: Game;
+  recipient: Player;
+};

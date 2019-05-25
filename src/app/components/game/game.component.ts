@@ -38,7 +38,13 @@ export class GameComponent implements OnInit {
   }
 
   toggleEmailNotifications() {
-    console.log('Toggled email notifications');
+    const oldValue = this.dms.user.settings.emailNotifications;
+    // update the user and the corresponding player of the game
+    this.mut.updateUserSettings({
+      emailNotifications: !oldValue
+    });
+    this.ajaxService.saveUpdatedUser(this.dms.user);
+    this.ajaxService.saveUpdatedGame(this.dms.game);
   }
 
   get pendingScore() {

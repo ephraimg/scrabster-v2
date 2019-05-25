@@ -5,7 +5,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DataModelService } from './data-model.service';
 import { AjaxService } from './ajax.service';
 import { PlayValidationService } from './play-validation.service';
-import { Tile, Bag, Board, Square, Player, Rack, Play, Placement, Game, User, ExtractedGoogleUser } from 'src/interfaces/interfaces';
+import { Tile, Square, Player, Rack, Placement, Game, User, UserSettings } from 'src/interfaces/interfaces';
 import { tileTypes } from '../../constants';
 import { mockUser1, mockUser2 } from '../../mock-data';
 
@@ -20,6 +20,21 @@ export class DataMutationsService {
     private playValidationService: PlayValidationService
   ) { }
 
+  ///////////////////////////
+  // USER-RELATED HELPERS
+  
+  updateUserSettings(inputSettings): UserSettings {
+    // update the user with the new settings
+    Object.assign(this.dms.user.settings, inputSettings);    
+    this.dms.players.forEach(player => {
+      if (player.user.id === this.dms.user.id) {
+        // update the corresponding game player with the new settings
+        Object.assign(player.user.settings, inputSettings);
+      }
+    });
+    return this.dms.user.settings;
+  }
+  
   ///////////////////////////
   // EXCHANGE-RELATED HELPERS
 
@@ -318,7 +333,15 @@ export class DataMutationsService {
       this.dms.playHistory.push(_clone(this.dms.play));
       // now currentPlayer has changed! ???
       this.ajaxService.saveUpdatedGame()
-        .then(() => this.playNext())
+        .then(() => {
+          if (this.dms.nextPlayer.user.settings.emailNotifications) {
+            this.ajaxService.sendNewMoveEmail({
+              game: this.dms.game,
+              recipient: this.dms.nextPlayer
+            });
+          }
+          this.playNext();
+        })
         .catch(err => console.log('playSubmit error: ', err));
       // now currentPlayer has changed!
       this.dms.gameOver ? this.handleGameOver() : this.playNext();

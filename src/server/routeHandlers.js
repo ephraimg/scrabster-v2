@@ -2,6 +2,7 @@
 require('dotenv').config();
 var path = require('path');
 var database = require('../db/helpers.js');
+var emailHelpers = require('./emailHelpers');
 
 var root = path.join(__dirname, '../../dist/scrabster-v2');
 
@@ -51,7 +52,16 @@ module.exports = function(app) {
 
 	app.get('*', function(req, res) {
 		res.sendFile(path.join(root, '/index.html'));
-	});
+  });
+  
+  app.post('/email', function(req, res) {
+    var mailer = emailHelpers.mailer;
+    var mailerConfig = emailHelpers.makeMailerConfig(req.body);
+    mailer.sendMail(mailerConfig, function (err, data) {
+      if (err) { return console.log(err); }
+      res.sendStatus(201);
+    });
+  })
 
 };
 

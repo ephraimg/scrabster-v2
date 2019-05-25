@@ -18,7 +18,7 @@ export const emptyUser: User = {
     memberStatus: 'PENDING',
     settings: {
         fixFooter: false,
-        emailNotifications: false
+        emailNotifications: true
     }
 };
 
