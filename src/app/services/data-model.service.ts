@@ -121,7 +121,7 @@ export class DataModelService {
   }
 
   get nextPlayer(): Player {
-    const nextTurnNumber = this.playHistory.length;
+    const nextTurnNumber = this.playHistory.length + 1;
     return this.players[(nextTurnNumber % this.players.length)];
   }
 
@@ -130,9 +130,13 @@ export class DataModelService {
   }
 
   get gameOver(): boolean {
-    return this.bag.length < 1 && this.players.some(player => (
-      player.rack.length < 1
-    ));
+    return this.bag.length < 1 && this.players.some(player => {
+      if (player.rack.length > 0) { return false; }
+      // even if player has empty rack, they need to submit the play!
+      return player.user.id === this.currentPlayer.user.id
+        ? this.play.placements.length < 1
+        : true;
+    });
   }
 
   get winner() {
