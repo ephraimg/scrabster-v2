@@ -3,7 +3,6 @@ require('dotenv').config();
 var bodyParser = require('body-parser');
 var path = require('path');
 var express = require('express');
-var database = require('../db/helpers.js');
 
 var app = express();
 var root = path.join(__dirname, '../../dist/scrabster-v2');

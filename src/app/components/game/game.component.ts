@@ -18,7 +18,7 @@ export class GameComponent implements OnInit {
   constructor(
     private ajaxService: AjaxService,
     private playValidationService: PlayValidationService,
-    private dms: DataModelService,
+    public dms: DataModelService,
     public mut: DataMutationsService,
     private route: ActivatedRoute,
   ) {

@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import TileModule from '../tile/tile.module';
+import { TileModule } from '../tile/tile.module';
 import { HeaderComponent } from '../header/header.component';
 
 @NgModule({
@@ -18,4 +18,4 @@ import { HeaderComponent } from '../header/header.component';
   ],
   providers: [],
 })
-export default class HeaderModule { }
+export class HeaderModule { }

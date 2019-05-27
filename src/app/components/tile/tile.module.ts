@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import TileComponent from './tile.component';
+import { TileComponent } from './tile.component';
 
 @NgModule({
   declarations: [
@@ -16,4 +16,4 @@ import TileComponent from './tile.component';
   ],
   providers: [],
 })
-export default class TileModule { }
+export class TileModule { }

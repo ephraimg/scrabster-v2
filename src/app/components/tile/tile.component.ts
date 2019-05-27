@@ -13,7 +13,7 @@ import { DataMutationsService } from 'src/app/services/data-mutations.service';
       </div>
     `
 })
-export default class TileComponent implements OnInit {
+export class TileComponent implements OnInit {
 
   @Input() inLogo: boolean = false;
   @Input() tile: Tile;
