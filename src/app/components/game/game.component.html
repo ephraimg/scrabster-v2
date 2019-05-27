@@ -15,28 +15,36 @@
   </mat-sidenav-content>
 
   <mat-sidenav #sidenav mode="over" fixedInViewport="true" autoFocus="false" closed>
-    <div class="inset-card">
-      <h1>Game</h1>
-      <div *ngFor="let player of dms.players">
-        {{player.user.name}}: {{player.score}}
-      </div>
-      <div *ngIf="dms.isCurrentPlayerUser">
-        Pending score:
-        <span *ngIf="!dms.dragging">
-          {{pendingScore}}
-        </span>
-      </div>
-    </div>
-    <div class="inset-card">
-      <h1>Navigation</h1>
-      <button mat-raised-button routerLink="/home" routerLinkActive="active">Home</button>
-      <button mat-raised-button routerLink="/rules">Rules</button>
-      <button mat-raised-button routerLink="/statistics">Statistics</button>
-    </div>
+    <button mat-raised-button routerLink="/home" routerLinkActive="active">Home</button>
+    <!-- <button mat-raised-button routerLink="/rules">Rules</button> -->
+    <!-- <button mat-raised-button routerLink="/statistics">Statistics</button> -->
     <div class="inset-card">
       <h1>Settings</h1>
       <mat-slide-toggle [checked]="dms.isFooterFixed" (change)="mut.toggleFooter()">Dock tile rack</mat-slide-toggle>
       <mat-slide-toggle [checked]="dms.user.settings.emailNotifications" (change)="toggleEmailNotifications()">Email notifications</mat-slide-toggle>
+    </div>
+    <div class="inset-card">
+      <h1>Scores</h1>
+      <div *ngFor="let player of dms.players">
+        {{player.user.name}}: {{player.score}}
+      </div>
+      <!-- <div *ngIf="dms.isCurrentPlayerUser">
+        Pending score:
+        <span *ngIf="!dms.dragging">
+          {{pendingScore}}
+        </span>
+      </div> -->
+      <hr class="sidenav-hr">
+      <ol class="play-list">
+        <li class="play-item" *ngFor="let play of dms.playHistory">
+          {{play.player.name}} - {{play.score}} points
+          <ul class="word-list">
+            <li class="word-item" *ngIf="play.plainWords && play.plainWords.length">
+              {{play.plainWords.join(', ')}}
+            </li>
+          </ul>
+        </li>
+      </ol>
     </div>
     <button mat-mini-fab color="accent" class="sidenav-button-inner" (click)="sidenav.toggle()">
       <span>&#x0225A;</span>

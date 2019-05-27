@@ -43,11 +43,16 @@ export class DataMutationsService {
     return this.dms.tilesToExchange;
   }
 
+  exchangeEmpty(): Tile[] {
+    this.dms.tilesToExchange.splice(0, this.dms.tilesToExchange.length);
+    return this.dms.tilesToExchange;
+  }
+
   exchangeClear(): Tile[] {
     for (let tile of this.dms.tilesToExchange) {
       this.rackAdd(tile);
     }
-    this.dms.tilesToExchange.splice(0, this.dms.tilesToExchange.length);
+    this.exchangeEmpty();
     return this.dms.tilesToExchange;
   }
 
@@ -104,6 +109,7 @@ export class DataMutationsService {
       player: this.dms.currentPlayer.user,
       startRack: _clone(this.dms.currentPlayer.rack),
       placements: [],
+      plainWords: [],
       score: 0
     };
   }
@@ -253,7 +259,7 @@ export class DataMutationsService {
     if (tileIsOnRack && target && target.row !== undefined) {
       const success = this.placeTile(selected, target.row, target.col);
       if (!success) { return; } // maybe square was occupied?
-      this.dms.placements.push(target);
+      this.placementsAdd(target);
       this.exchangeClear();
       this.rackRemove(selected);
     }
@@ -318,7 +324,7 @@ export class DataMutationsService {
       this.rackFill();
       this.dms.tilesToExchange.forEach(tile => this.returnTile(tile));
       console.log(`${this.dms.currentPlayer.user.name}'s play: 0 points (tile exchange)`);
-      this.exchangeClear();
+      this.exchangeEmpty();
       this.dms.playHistory.push(this.dms.play);
       // now currentPlayer has changed!  ???
       this.ajaxService.saveUpdatedGame();
@@ -328,22 +334,20 @@ export class DataMutationsService {
       this.rackFill();
       this.dms.play.score = this.playValidationService.getScore(this.dms.board, this.dms.play);
       this.dms.currentPlayer.score += this.dms.play.score;
-      const plainWords = this.playValidationService.getPlainWords(this.dms.board, this.dms.play).join(', ');
-      console.log(`${this.dms.currentPlayer.user.name}'s play: ${this.dms.play.score} for ${plainWords}`);
+      this.dms.play.plainWords = this.playValidationService.getPlainWords(this.dms.board, this.dms.play);
       this.dms.playHistory.push(_clone(this.dms.play));
-      // now currentPlayer has changed! ???
+      // now currentPlayer has changed!
       this.ajaxService.saveUpdatedGame()
         .then(() => {
           if (this.dms.nextPlayer.user.settings.emailNotifications) {
             this.ajaxService.sendNewMoveEmail({
               game: this.dms.game,
-              recipient: this.dms.nextPlayer
+              recipient: this.dms.currentPlayer
             });
           }
           this.playNext();
         })
         .catch(err => console.log('playSubmit error: ', err));
-      // now currentPlayer has changed!
       this.dms.gameOver ? this.handleGameOver() : this.playNext();
     }
   }

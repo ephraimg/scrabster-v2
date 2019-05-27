@@ -51,6 +51,7 @@ export interface Play {
   player: User;
   startRack: Tile[];
   placements: Placement[];
+  plainWords: String[];
   score: number;
 }
 

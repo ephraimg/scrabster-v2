@@ -44,6 +44,20 @@ mat-sidenav {
     width: 65%;
     margin: 0.5rem 0;
   }
+  .play-list {
+    list-style-type: decimal;
+    margin: 0.5rem;
+    .play-item {
+      margin-left: 1rem;
+    }
+  }
+  .word-list {
+    list-style-type: disc;
+    margin: 0.5rem;
+    .word-item {
+      margin-left: 1rem;
+    }
+  }
 }
 
 app-header {
@@ -85,6 +99,10 @@ app-header {
 .sidenav-button-outer {
   position: fixed;
   left: 1rem;
+}
+
+.sidenav-hr {
+  margin: 0.75rem 0;
 }
 
 // Raise up board in case footer is fixed

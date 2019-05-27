@@ -96,6 +96,7 @@ const mockPlay1 = {
         { row: 7, col: 6, bonus: null, tile: { "letter": "T", "points": 1, "id": "tile-T-0" } },
         { row: 7, col: 7, bonus: 'star', tile: { "letter": "E", "points": 1, "id": "tile-E-0" } },
     ],
+    plainWords: ['QUOTE'],
     score: 48
 }
 
@@ -115,6 +116,7 @@ const mockPlay2 = {
         { row: 5, col: 6, bonus: null, tile: { "letter": "A", "points": 1, "id": "tile-A-0" } },
         { row: 6, col: 6, bonus: null, tile: { "letter": "P", "points": 3, "id": "tile-P-0" } }
     ],
+    plainWords: ['APT'],
     score: 8
 }
 
@@ -301,6 +303,7 @@ const mockPlay3 = {
         { row: 7, col: 7, bonus: 'star', tile: { "letter": "G", "points": 2, "id": "tile-G-2" } },
         { row: 8, col: 7, bonus: null, tile: { "letter": "O", "points": 1, "id": "tile-O-0" } },
     ],
+    plainWords: ['GO'],
     score: 6
 }
 
@@ -319,6 +322,7 @@ const mockPlay4 = {
     placements: [
         { row: 8, col: 6, bonus: 'dls', tile: { "letter": "Y", "points": 4, "id": "tile-Y-1" } },
     ],
+    plainWords: ['YO'],
     score: 9
 }
 
@@ -339,6 +343,7 @@ const mockPlay5 = {
         { row: 7, col: 9, bonus: null, tile: { "letter": "N", "points": 1, "id": "tile-N-3" } },
 
     ],
+    plainWords: ['GIN'],
     score: 4
 }
 
@@ -359,6 +364,7 @@ const mockPlay6 = {
         { row: 9, col: 8, bonus: null, tile: { "letter": "E", "points": 1, "id": "tile-E-9" } },
         { row: 10, col: 8, bonus: null, tile: { "letter": "T", "points": 1, "id": "tile-T-0" } },
     ],
+    plainWords: ['INET', 'YON'],
     score: 11
 }
 

@@ -83,6 +83,7 @@ export const mockPlay1: Play = {
         { row: 7, col: 6, bonus: null, tile: { "letter":"T", "points":1, "id":"tile-T-0" } },
         { row: 7, col: 7, bonus: 'star', tile: { "letter":"E", "points":1, "id":"tile-E-0" } },
     ],
+    plainWords: ['QUOTE'],
     score: 48
 }
 
@@ -102,6 +103,7 @@ export const mockPlay2: Play = {
         { row: 5, col: 6, bonus: null, tile: { "letter":"A", "points":1, "id":"tile-A-0" } },
         { row: 6, col: 6, bonus: null, tile: { "letter":"P", "points":3, "id":"tile-P-0" } }
     ],
+    plainWords: ['APT'],
     score: 8
 }
 

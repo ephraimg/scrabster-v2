@@ -26,12 +26,15 @@ module.exports.makeMailerConfig = payload => {
     to: recipientEmail,
     subject: 'New play in your Scrabster game',
     html: `
-        <div style="">
+        <div>
           <p>
             Hi, ${recipientName}!
           </p>
           <p>
-            ${playerName} has made a new play in your Scrabster game.
+            ${playerName} has made a new play in your Scrabster game, earning
+            ${play.score} points for ${play.plainWords.join(', ')}.
+          </p>
+          <p>
             To sign in and view the game, <a href="${baseUrl}${gameUrl}">click here</a>.
           </p>
           <hr>
