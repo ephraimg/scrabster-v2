@@ -121,7 +121,7 @@ export class AjaxService {
         // console.log('sendNewMoveEmail - data: ', data);
         return Promise.resolve(data);
       })
-      .catch(err => { console.log('user update error: ', err); })
+      .catch(err => { console.log('send new move email error: ', err); })
   }
 
 }

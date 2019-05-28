@@ -61,7 +61,7 @@ export class AuthService {
   }
 
   get isAdmin(): boolean {
-    return !this.isAuthenticated && this.dms.user.memberStatus === 'ADMIN';
+    return this.isAuthenticated && this.dms.user.memberStatus === 'ADMIN';
   }
 
 }

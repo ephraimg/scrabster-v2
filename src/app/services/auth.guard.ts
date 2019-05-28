@@ -56,7 +56,11 @@ export class AdminGuard implements CanActivate {
     return this.ajaxService.fetchUser(userId)
       .then(scrabsterUser => {
         this.dms.user = scrabsterUser;
-        return true;
+        if (this.dms.user.memberStatus === 'ADMIN') {
+          return true;
+        };
+        this.router.navigate(['login']);
+        return false;          
       })
       .catch(err => {
         console.log('AdminGuard error: ', err);

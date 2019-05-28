@@ -49,19 +49,19 @@ module.exports = function(app) {
       if (result) { res.send(result); }
     });
   });
-
-	app.get('*', function(req, res) {
-		res.sendFile(path.join(root, '/index.html'));
-  });
   
   app.post('/email', function(req, res) {
     var mailer = emailHelpers.mailer;
     var mailerConfig = emailHelpers.makeMailerConfig(req.body);
-    mailer.sendMail(mailerConfig, function (err, data) {
-      if (err) { return console.log(err); }
-      res.sendStatus(201);
+    mailer.sendMail(mailerConfig, function (err, result) {
+      if (err) { console.log(err); }
+      if (result) { res.send(result); }
     });
-  })
+  });
+
+	app.get('*', function(req, res) {
+		res.sendFile(path.join(root, '/index.html'));
+  });
 
 };
 
