@@ -235,25 +235,27 @@ export class PlayValidationService {
   getScore(board: Board = this.dms.board, play: Play = this.dms.play, inputOrient?: string): number {
     const orient = inputOrient ? inputOrient : this.wordOrientation(this.getSortedPlacements(play));
     const wordsPlayed = this.getAllWords(board, play, orient);
-    let sum = 0;
+    let playTotal = 0;
     wordsPlayed.forEach(word => {
+      let wordTotal = 0;
       // We'll multiply score if there's a word bonus under any tile in the word
       let wordMultiplier = 1;
       word.forEach(sq => {
         // Get points for the tile, and then we'll multiply if there's a letter bonus
         let points = sq.tile.points;
         if (play.placements.includes(sq)) {
-          // Only count bonuss if they're under this turn's placements
+          // Only count bonuses if they're under this turn's placements
           if (sq.bonus === 'tls') { points *= 3; }
           if (sq.bonus === 'dls') { points *= 2; }
           if (sq.bonus === 'tws') { wordMultiplier *= 3; }
           if (sq.bonus === 'dws' || sq.bonus === 'star') { wordMultiplier *= 2; }
         }
-        sum += points;
+        wordTotal += points;
       });
-      sum *= wordMultiplier;
+      wordTotal *= wordMultiplier;
+      playTotal += wordTotal;
     })
-    if (play.placements.length === 7) { sum += 50; }
-    return sum;
+    if (play.placements.length === 7) { playTotal += 50; }
+    return playTotal;
   }
 }
