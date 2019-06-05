@@ -8,6 +8,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material';
 
 import { TileModule } from 'src/app/components/tile/tile.module';
 import { HeaderModule } from '../header/header.module';
@@ -18,6 +20,8 @@ import { TrianglesComponent } from './triangles/triangles.component';
 import { FooterComponent } from './footer/footer.component';
 
 import { GameRoutingModule } from './game-routing.module';
+import { LeftSidenavComponent } from './left-sidenav/left-sidenav.component';
+import { RightSidenavComponent } from './right-sidenav/right-sidenav.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +30,8 @@ import { GameRoutingModule } from './game-routing.module';
     SquareComponent,
     TrianglesComponent,
     FooterComponent,
+    LeftSidenavComponent,
+    RightSidenavComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +41,8 @@ import { GameRoutingModule } from './game-routing.module';
     MatButtonModule,
     MatSlideToggleModule,
     DragDropModule,
+    MatFormFieldModule,
+    MatInputModule,
     HeaderModule,
     TileModule,
     GameRoutingModule,

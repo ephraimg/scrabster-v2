@@ -1,54 +1,34 @@
 <mat-sidenav-container *ngIf="dms.game">
 
   <mat-sidenav-content>
-    <button cdkDrag mat-mini-fab color="accent" class="sidenav-button-outer" (click)="sidenav.toggle()">
-      <span>&#x02259;</span>
+
+    <button cdkDrag mat-mini-fab color="accent" class="left-sidenav-button-outer" (click)="leftSidenav.toggle()">
+      <span>&#9776;</span>
     </button>
+
+    <button cdkDrag mat-mini-fab color="accent" class="right-sidenav-button-outer" (click)="rightSidenav.toggle()">
+      <span>&#10078;</span>
+    </button>
+
     <app-header></app-header>
+
     <mat-card *ngIf="windowWidth >= 600" [ngClass]="[dms.isFooterFixed ? 'with-fixed' : '']">
       <app-board></app-board>
     </mat-card>
     <div *ngIf="windowWidth < 600" [ngClass]="[dms.isFooterFixed ? 'with-fixed' : '']">
       <app-board></app-board>
     </div>
+
     <app-footer></app-footer>
+
   </mat-sidenav-content>
 
-  <mat-sidenav #sidenav mode="over" fixedInViewport="true" autoFocus="false" closed>
-    <button mat-raised-button routerLink="/home" routerLinkActive="active">Home</button>
-    <!-- <button mat-raised-button routerLink="/rules">Rules</button> -->
-    <!-- <button mat-raised-button routerLink="/statistics">Statistics</button> -->
-    <div class="inset-card">
-      <h1>Settings</h1>
-      <mat-slide-toggle [checked]="dms.isFooterFixed" (change)="mut.toggleFooter()">Dock tile rack</mat-slide-toggle>
-      <mat-slide-toggle [checked]="dms.user.settings.emailNotifications" (change)="toggleEmailNotifications()">Email notifications</mat-slide-toggle>
-    </div>
-    <div class="inset-card">
-      <h1>Scores</h1>
-      <div *ngFor="let player of dms.players">
-        {{player.user.name}}: {{player.score}}
-      </div>
-      <!-- <div *ngIf="dms.isCurrentPlayerUser">
-        Pending score:
-        <span *ngIf="!dms.dragging">
-          {{pendingScore}}
-        </span>
-      </div> -->
-      <hr class="sidenav-hr">
-      <ol class="play-list">
-        <li class="play-item" *ngFor="let play of dms.playHistory">
-          {{play.player.name}} - {{play.score}} points
-          <ul class="word-list">
-            <li class="word-item" *ngIf="play.plainWords && play.plainWords.length">
-              {{play.plainWords.join(', ')}}
-            </li>
-          </ul>
-        </li>
-      </ol>
-    </div>
-    <button mat-mini-fab color="accent" class="sidenav-button-inner" (click)="sidenav.toggle()">
-      <span>&#x0225A;</span>
-    </button>
+  <mat-sidenav #leftSidenav mode="over" fixedInViewport="true" autoFocus="false" position="start" closed>
+    <app-left-sidenav [sidenav]="leftSidenav" [toggleEmailNotifications]="toggleEmailNotifications"></app-left-sidenav>
+  </mat-sidenav>
+
+  <mat-sidenav #rightSidenav mode="over" fixedInViewport="true" autoFocus="false" position="end" closed>
+    <app-right-sidenav [sidenav]="rightSidenav"></app-right-sidenav>
   </mat-sidenav>
 
 </mat-sidenav-container>

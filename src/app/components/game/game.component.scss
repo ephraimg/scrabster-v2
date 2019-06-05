@@ -17,47 +17,7 @@ mat-sidenav-content {
 mat-sidenav {
   box-sizing: border-box;
   width: 20rem;
-  padding: 2rem;
-  h1 {
-    font-weight: bold;
-    font-size: 1.25rem;
-    margin: 0 0 1rem;
-  }
-  .inset-card {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 1rem;
-    margin: 1rem 0;
-    border-radius: 3px;
-    border: 1px solid transparent;
-    border-top: none;
-    border-bottom: 1px solid #DDD;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,.39), 0 -1px 1px #FFF, 0 1px 0 #FFF;
-    outline: 0;
-    div {
-      margin: 0.5rem 0;
-    }
-  }
-  .mat-raised-button {
-    display: block;
-    box-sizing: border-box;
-    width: 65%;
-    margin: 0.5rem 0;
-  }
-  .play-list {
-    list-style-type: decimal;
-    margin: 0.5rem;
-    .play-item {
-      margin-left: 1rem;
-    }
-  }
-  .word-list {
-    list-style-type: disc;
-    margin: 0.5rem;
-    .word-item {
-      margin-left: 1rem;
-    }
-  }
+  padding: 1rem;
 }
 
 app-header {
@@ -69,36 +29,34 @@ app-header {
   }
 }
 
-.sidenav-button-inner, .sidenav-button-outer {
+.left-sidenav-button-outer {
   z-index: 999;
-  top: 1rem;
-  font-size: 2rem;
-  padding: 0;
   box-sizing: border-box;
+  padding: 0;
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  font-size: 1.5rem;
   span {
     margin: 0;
     padding: 0;
     display: inline-block;
-    transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    -webkit-transform: rotate(90deg);
   }
 }
 
-.sidenav-button-inner {
-  position: absolute;
-  right: 1rem;
-  span {
-    display: inline-block;
-    transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    -webkit-transform: rotate(90deg);
-  }
-}
-
-.sidenav-button-outer {
+.right-sidenav-button-outer {
+  z-index: 999;
+  box-sizing: border-box;
+  padding: 0;
   position: fixed;
-  left: 1rem;
+  right: 1rem;
+  top: 1rem;
+  font-size: 1.5rem;
+  span {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+  }
 }
 
 .sidenav-hr {
