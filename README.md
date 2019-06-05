@@ -12,10 +12,10 @@ After installing dependencies, you must add a line to the CDK Drag / Drop source
 
 The following variables must be provided in a .env file:
 
-- PORT=5000
+- PORT [e.g. `5000`]
 - GOOGLE_CLIENT_ID [for Google Login functionality]
 - GOOGLE_CLIENT_SECRET [for Google Login functionality]
-- NODE_ENV [development or production]
+- NODE_ENV [`development` or `production`]
 - BASE_URL_DEV [e.g. `http://localhost:5000`]
 - BASE_URL_PROD
 - MONGODB_URI_DEV [e.g. `mongodb://127.0.0.1:27017`]
@@ -37,6 +37,34 @@ To interact with MongoDB from your terminal, use `mongo` command along with the 
 ## Node
 
 Run `yarn start` to start the Node server.
+
+## Tips on deploying to AWS
+
+There are a number of steps required to get this application running on AWS, but most of them are straightforward. I'll assume you're using a Linux server and will deploy by cloning the repo from GitHub. You'll need to use sudo for most of the shell commands.
+
+- Install NVM to manage Node versions.
+  * `$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash`
+  * `nvm install node` (to install the latest Node version)
+- Install MongoDB and create a database.
+  * Follow steps (1) and (2) to use `.rpm` packages as described here: [https://docs.mongodb.com/manual/tutorial/install-mongodb-on-amazon/](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-amazon/).
+  * Start up Mongo with `mongod`, or to detach it use `mongod --fork --syslog`.
+  * Start the Mongo shell with `mongo` and create a database with `use scrabsterdb` (or whatever db name you're using in your `.env` file).
+- Install Nginx and set up port mapping. This will allow you to serve your application to users at the server's public url without requiring a port to be appended.
+  * `yum install nginx`
+  * Map port 80 of your server to the port you've specified in your `.env` (e.g. 5000) by editing the file at `/etc/nginx/nginx.conf`. Under `server` configure the location as follows: 
+    ```
+    location / {
+      proxy_set_header  X-Real-IP  $remote_addr;
+      proxy_set_header  Host       $http_host;
+      proxy_pass        http://127.0.0.1:5000;
+    }
+    ```
+  * `service nginx start`
+- Install Git: `yum install git`.
+- Clone the repo from GitHub and create an `.env` file in the repo's root directory (see below for required variables).
+- Install all application dependencies.
+- Create a production build of the application with `ng build --prod`. If you encounter problems building on the AWS server, build on your local machine and commit the dist folder.
+- Start up your Node server!
 
 # Angular CLI notes
 
