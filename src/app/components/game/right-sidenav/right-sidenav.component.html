@@ -4,13 +4,10 @@
 
 <div class="inset-card">
   <h1>Messages</h1>
-  <mat-form-field>
-    <input matInput class="chat-input" type="text" placeholder="Talk smack here" rows="2" autofocus>
-  </mat-form-field>
-  <div #chatWrapper class="chat-wrapper">
+  <div #chatWrapper [scrollTop]="chatWrapper.scrollHeight" class="chat-wrapper">
     <ul class="chat-list">
-      <li *ngFor="let chat of reverseChats" class="chat-item">
-        <p class="chat-info">
+      <li *ngFor="let chat of chats; index as i" class="chat-item">
+        <p *ngIf="i === 0 || chats[i].author !== chats[i-1].author" class="chat-info">
           <span class="chat-author">
             {{chat.author}}
           </span>
@@ -24,4 +21,19 @@
       </li>
     </ul>
   </div>
+  <form #chatForm="ngForm" (ngSubmit)="onSubmit(chatForm)" novalidate>
+    <mat-form-field>
+      <input
+        matInput
+        ngModel
+        name="chatInput"
+        #chatInput="ngModel"
+        class="chat-input"
+        type="text"
+        placeholder="Type your message here"
+        rows="2"
+        autofocus
+      >
+    </mat-form-field>
+  </form>
 </div>

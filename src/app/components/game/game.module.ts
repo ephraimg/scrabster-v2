@@ -2,6 +2,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
@@ -36,6 +37,7 @@ import { RightSidenavComponent } from './right-sidenav/right-sidenav.component';
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
     MatSidenavModule,
     MatCardModule,
     MatButtonModule,

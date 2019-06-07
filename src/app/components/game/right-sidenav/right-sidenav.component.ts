@@ -1,4 +1,5 @@
 import { Component, AfterViewChecked, ElementRef, ViewChild, OnInit, Input } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-right-sidenav',
@@ -150,10 +151,6 @@ export class RightSidenavComponent implements OnInit {
     }
   ];
 
-  get reverseChats() {
-    return [...this.chats].reverse();
-  }
-
   constructor() { }
 
   ngOnInit() {
@@ -165,6 +162,17 @@ export class RightSidenavComponent implements OnInit {
     const hours = jsDate.getHours();
     const minutes = jsDate.getMinutes();
     return `${month}/${day}, ${hours}:${minutes}`;
+  }
+
+  onSubmit(chatForm: NgForm) {
+    // TODO: save new message to db
+    this.chats.push({
+      author: 'Whoever',
+      time: new Date(),
+      viewedBy: ['Ephraim'],
+      message: chatForm.value.chatInput
+    });
+    chatForm.reset();
   }
 
 }
