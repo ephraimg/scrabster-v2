@@ -5,7 +5,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DataModelService } from './data-model.service';
 import { AjaxService } from './ajax.service';
 import { PlayValidationService } from './play-validation.service';
-import { Tile, Square, Player, Rack, Placement, Game, User, UserSettings } from 'src/interfaces/interfaces';
+import { Tile, Square, Player, Rack, Placement, Game, User, UserSettings, Chats, ChatMessage, ChatViews } from 'src/interfaces/interfaces';
 import { tileTypes } from '../../constants';
 import { mockUser1, mockUser2 } from '../../mock-data';
 
@@ -67,7 +67,11 @@ export class DataMutationsService {
       bag: this.createBag(),
       players: players,
       playHistory: [],
-      tilesToExchange: []
+      tilesToExchange: [],
+      chats: {
+        messages: [],
+        views: {},
+      },
     }
   }
 
@@ -224,6 +228,28 @@ export class DataMutationsService {
     })
     console.log('\nCurrent board:\n');
     console.log(disp.join('\n\n'));
+  }
+
+  ///////////////////////
+  // CHAT-RELATED HELPERS
+
+  chatsAdd(
+    message: string,
+    userId: string = this.dms.user.id,
+    chatMessages: ChatMessage[] = this.dms.chatMessages
+  ): void {
+    const newChatMessage: ChatMessage = {
+      authorUserId: userId,
+      date: new Date(),
+      message: message
+    };
+    chatMessages.push(newChatMessage);
+    // If someone just added a message, they've seen it!
+    this.chatViewsUpdate(userId);
+  }
+
+  chatViewsUpdate(userId: string = this.dms.user.id, chatViews: ChatViews = this.dms.chatViews): void {
+    chatViews[userId] = new Date();
   }
 
   ///////////////////////////

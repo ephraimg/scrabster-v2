@@ -1,178 +1,53 @@
-import { Component, AfterViewChecked, ElementRef, ViewChild, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { DataModelService } from 'src/app/services/data-model.service';
+import { DataMutationsService } from 'src/app/services/data-mutations.service';
+import { AjaxService } from 'src/app/services/ajax.service';
 
 @Component({
   selector: 'app-right-sidenav',
   templateUrl: './right-sidenav.component.html',
   styleUrls: ['./right-sidenav.component.scss']
 })
-export class RightSidenavComponent implements OnInit {
+export class RightSidenavComponent {
 
   @Input() sidenav: any;
 
-  chats = [
-    {
-      author: 'Ephraim',
-      time: new Date('1995-12-17T03:24:00'),
-      viewedBy: ['Henry'],
-      message: 'Great play, bro'
-    },
-    {
-      author: 'Henry',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Henry',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Ephraim',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Henry',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Henry',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Henry',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Ephraim',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Ephraim',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Henry',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Henry',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Henry',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Ephraim',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Henry',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Henry',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Ephraim',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Ephraim',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Ephraim',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Henry',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Henry',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Henry',
-      time: new Date('1995-12-17T03:28:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Ephraim',
-      time: new Date('1995-12-17T23:58:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    },
-    {
-      author: 'Henry',
-      time: new Date('1995-12-17T23:59:00'),
-      viewedBy: ['Ephraim'],
-      message: 'I\'m gonna kick your butt, fool'
-    }
-  ];
+  constructor(
+    public dms: DataModelService,
+    private mut: DataMutationsService,
+    private ajaxService: AjaxService
+  ) { }
 
-  constructor() { }
-
-  ngOnInit() {
+  toggleSidenav() {
+    this.mut.chatViewsUpdate();
+    this.ajaxService.saveUpdatedGame();
+    this.sidenav.toggle();
   }
 
-  formatChatTime(jsDate: Date) {
+  formatChatTime(inputDate: Date) {
+    // Dates are stored in DB as strings
+    const jsDate = new Date(inputDate);
     const day = jsDate.getDate();
     const month = jsDate.getMonth();
     const hours = jsDate.getHours();
-    const minutes = jsDate.getMinutes();
-    return `${month}/${day}, ${hours}:${minutes}`;
+    const minuteString = `0${jsDate.getMinutes().toString()}`.slice(-2);
+    return `${month}/${day}, ${hours}:${minuteString}`;
+  }
+
+  formatChatAuthor(userId: string) {
+    return this.dms.getPlayerNameFromId(userId);
   }
 
   onSubmit(chatForm: NgForm) {
-    // TODO: save new message to db
-    this.chats.push({
-      author: 'Whoever',
-      time: new Date(),
-      viewedBy: ['Ephraim'],
-      message: chatForm.value.chatInput
+    this.mut.chatsAdd(chatForm.value.chatInput);
+    this.ajaxService.saveUpdatedGame()
+    .then(() => {
+      chatForm.reset();
+    })
+    .catch(err => {
+      console.log(err);
     });
-    chatForm.reset();
   }
 
 }

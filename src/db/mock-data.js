@@ -275,6 +275,10 @@ const mockGame1 = {
         mockPlay2
     ],
     tilesToExchange: [],
+    chats: {
+      messages: [],
+      views: {},
+    }
 };
 
 
@@ -539,6 +543,10 @@ const mockGame2 = {
         mockPlay6,
     ],
     tilesToExchange: [],
+    chats: {
+      messages: [],
+      views: {},
+    }
 };
 
 // Almost completed game (6 tiles left in bag)
@@ -3934,7 +3942,11 @@ const mockGame3 = {
   ],
   "tilesToExchange": [
 
-  ]
+  ],
+  chats: {
+    messages: [],
+    views: {},
+  }
 }
 
 module.exports.mockGame = mockGame1;

@@ -59,4 +59,11 @@ export class GameComponent implements OnInit {
     }
     return 'Play not valid!';
   }
+
+  get badgeVisible() {
+    // Show badge if there's a message more recent than last view by the user
+    const lastMessage = this.dms.chatMessages[this.dms.chatMessages.length - 1];
+    const lastMessageDate = lastMessage ? new Date(lastMessage.date) : null;
+    return !this.dms.userChatView || this.dms.userChatView < lastMessageDate;
+  }
 }

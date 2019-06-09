@@ -60,19 +60,19 @@ h1 {
 }
 
 .chat-wrapper::before {
-  background-image: linear-gradient(bottom, 
+  background-image: linear-gradient(to top, 
     rgba(255, 255, 255, 0) 60%,
     rgba(255, 255, 255, 0.5) 100%);
-  background-image: -moz-linear-gradient(bottom, 
+  background-image: -moz-linear-gradient(to top, 
     rgba(255, 255, 255, 0) 60%,
     rgba(255, 255, 255, 0.5) 100%);
-  background-image: -ms-linear-gradient(bottom, 
+  background-image: -ms-linear-gradient(to top, 
     rgba(255, 255, 255, 0) 60%,
     rgba(255, 255, 255, 0.5) 100%);
-  background-image: -o-linear-gradient(bottom, 
+  background-image: -o-linear-gradient(to top, 
     rgba(255, 255, 255, 0) 60%,
     rgba(255, 255, 255, 0.5) 100%);
-  background-image: -webkit-linear-gradient(bottom, 
+  background-image: -webkit-linear-gradient(to top, 
     rgba(255, 255, 255, 0) 60%,
     rgba(255, 255, 255, 0.5) 100%);
   content: " ";
@@ -91,14 +91,16 @@ h1 {
 .chat-info {
   display: flex;
   justify-content: space-between;
+  align-content: flex-end;
   margin: 0.75rem 0 0.5rem;
   color: gray;
   font-style: italic;
   .chat-author {
     font-size: 1rem;
   }
-  .chat-time {
+  .chat-date {
     font-size: 0.75rem;
+    line-height: 1rem;
     margin-right: 2px;
   }
 }

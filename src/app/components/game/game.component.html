@@ -2,11 +2,39 @@
 
   <mat-sidenav-content>
 
-    <button cdkDrag mat-mini-fab color="accent" class="left-sidenav-button-outer" (click)="leftSidenav.toggle()">
+    <button
+      cdkDrag
+      mat-mini-fab
+      color="accent"
+      class="left-sidenav-button-outer"
+      (click)="leftSidenav.toggle()"
+    >
       <span>&#9776;</span>
     </button>
 
-    <button cdkDrag mat-mini-fab color="accent" class="right-sidenav-button-outer" (click)="rightSidenav.toggle()">
+    <!-- Using ngIf because matBadgeHidden isn't working -->
+    <button
+      *ngIf="badgeVisible"
+      cdkDrag
+      mat-mini-fab
+      color="accent"
+      matBadge="!"
+      matBadgeColor="warn"
+      matBadgeSize="small"
+      matBadgePosition="before"
+      class="right-sidenav-button-outer"
+      (click)="rightSidenav.toggle()"
+    >
+      <span>&#10078;</span>
+    </button>
+    <button
+      *ngIf="!badgeVisible"
+      cdkDrag
+      mat-mini-fab
+      color="accent"
+      class="right-sidenav-button-outer"
+      (click)="rightSidenav.toggle()"
+    >
       <span>&#10078;</span>
     </button>
 

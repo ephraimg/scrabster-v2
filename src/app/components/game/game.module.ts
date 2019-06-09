@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -41,6 +42,7 @@ import { RightSidenavComponent } from './right-sidenav/right-sidenav.component';
     MatSidenavModule,
     MatCardModule,
     MatButtonModule,
+    MatBadgeModule,
     MatSlideToggleModule,
     DragDropModule,
     MatFormFieldModule,

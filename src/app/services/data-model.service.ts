@@ -2,7 +2,7 @@ import _clone from 'lodash.clonedeep';
 
 import { Injectable } from '@angular/core';
 import { bonuses } from '../../constants';
-import { Tile, Bag, Board, Square, Player, Rack, Play, Placement, Game, User, ExtractedGoogleUser } from 'src/interfaces/interfaces';
+import { Tile, Bag, Board, Chats, Player, Rack, Play, Placement, Game, User } from 'src/interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -105,6 +105,12 @@ export class DataModelService {
     return this.game ? this.game.playHistory : [];
   }
 
+  get chats(): Chats {
+    return this.game && this.game.chats
+      ? this.game.chats
+      : { messages: [], views: {} };
+  }
+
   ////////////////////////////////////
   // PLAY PROPERTY GETTERS AND SETTERS
 
@@ -169,6 +175,11 @@ export class DataModelService {
     return this.game.players.length;
   }
 
+  getPlayerNameFromId(inputUserId, players = this.players) {
+    const player = players.find(player => player.user.id === inputUserId);
+    return player.user.givenName;
+  }
+
   get rack(): Rack {
     // show rack of current player if that's the user
     if (this.currentPlayer.user.id === this.user.id) {
@@ -200,6 +211,25 @@ export class DataModelService {
 
   getBonus(row, col) {
     return bonuses[row][col] || '';
+  }
+
+  ////////////////////////////////////
+  // CHAT-RELATED GETTERS AND SETTERS
+
+  get chatMessages() {
+    return this.chats.messages;
+  }
+
+  get chatViews() {
+    return this.chats.views;
+  }
+
+  get userChatView() {
+    if (this.chatViews[this.user.id]) {
+      // Date is stored as string in DB
+      return new Date(this.chatViews[this.user.id]);
+    }
+    return undefined;
   }
 
 }

@@ -68,6 +68,7 @@ export interface Game {
   bag: Tile[];
   playHistory: Play[];
   tilesToExchange: Tile[];
+  chats: Chats;
 };
 
 export interface Board extends Array<Array<Square>> { };
@@ -77,4 +78,21 @@ export interface Bag extends Array<Tile> { };
 export interface NewMoveEmailPayload {
   game: Game;
   recipient: Player;
+};
+
+export interface ChatMessage {
+  authorUserId: string;
+  date: Date;
+  message: string;
+};
+
+export interface ChatViews {
+  // key is viewer user id
+  // value is most recent view by that user
+  [key: string]: Date;
+}
+
+export interface Chats {
+  messages: ChatMessage[];
+  views: ChatViews;
 };

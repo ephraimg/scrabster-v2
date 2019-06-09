@@ -261,4 +261,8 @@ export const mockGame: Game = {
         mockPlay2
     ],
     tilesToExchange: [],
+    chats: {
+      messages: [],
+      views: {},
+    }
 };

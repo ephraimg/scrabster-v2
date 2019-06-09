@@ -1,18 +1,24 @@
-<button mat-mini-fab color="accent" class="sidenav-button-inner" (click)="sidenav.toggle()">
+<button
+  mat-mini-fab
+  color="accent"
+  class="sidenav-button-inner"
+  (click)="toggleSidenav()"
+>
   <span>&times;</span>
 </button>
 
 <div class="inset-card">
   <h1>Messages</h1>
-  <div #chatWrapper [scrollTop]="chatWrapper.scrollHeight" class="chat-wrapper">
+  <!-- To avoid "Expression has changed after it was checked", only scroll after messages are present -->
+  <div #chatWrapper [scrollTop]="dms.chatMessages ? 0 : chatWrapper.scrollHeight" class="chat-wrapper">
     <ul class="chat-list">
-      <li *ngFor="let chat of chats; index as i" class="chat-item">
-        <p *ngIf="i === 0 || chats[i].author !== chats[i-1].author" class="chat-info">
+      <li *ngFor="let chat of dms.chatMessages; index as i" class="chat-item">
+        <p *ngIf="i === 0 || dms.chatMessages[i].authorUserId !== dms.chatMessages[i-1].authorUserId" class="chat-info">
           <span class="chat-author">
-            {{chat.author}}
+            {{formatChatAuthor(chat.authorUserId)}}
           </span>
-          <span class="chat-time">
-            {{formatChatTime(chat.time)}}
+          <span class="chat-date">
+            {{formatChatTime(chat.date)}}
           </span>
         </p>
         <p class="chat-message">
@@ -22,7 +28,7 @@
     </ul>
   </div>
   <form #chatForm="ngForm" (ngSubmit)="onSubmit(chatForm)" novalidate>
-    <mat-form-field>
+    <mat-form-field color="accent">
       <input
         matInput
         ngModel
@@ -33,6 +39,7 @@
         placeholder="Type your message here"
         rows="2"
         autofocus
+        autocomplete="off"
       >
     </mat-form-field>
   </form>
