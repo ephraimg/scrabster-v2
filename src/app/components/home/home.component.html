@@ -11,7 +11,7 @@
   </mat-card>
 
   <mat-card class="game-selection">
-    <mat-form-field>
+    <mat-form-field color="accent">
       <mat-select placeholder="Game" [(ngModel)]="selectedGameId">
         <mat-option *ngFor="let game of dms.games" [value]="game.id">
           <span *ngFor="let player of game.players">{{ player.user.givenName }}, </span>
@@ -23,7 +23,7 @@
   </mat-card>
 
   <mat-card class="game-selection">
-    <mat-form-field>
+    <mat-form-field color="accent">
       <mat-select placeholder="Opponent" [(ngModel)]="selectedOpponent">
         <mat-option *ngFor="let opponent of opponents" [value]="opponent">
           {{ opponent.name }}
@@ -43,15 +43,15 @@
       <em>Moving your tiles: </em> To place a tile, either drag and drop the tile or click to select
       it and then click on a square. You may move a tile from the board back to your rack either by
       dragging and dropping or by selecting the tile and then clicking next to your other tiles
-      at the bottom of the screen. Clicking the <em>Clear</em> button will return all your
+      at the bottom of the screen. Clicking the Clear button will return all your
       tiles to your rack.
     </mat-card-content>
     <mat-card-content>
       <em>Exchanging tiles: </em> You may choose to exchange any number of tiles instead of playing a
       word on the board. (There is no penalty, but your turn ends after exchanging.) For each tile you
-      want to exchange, select the tile and then click <em>Trade</em>. When you are ready to end your
-      turn and receive new tiles, click <em>Submit</em>. If you change your mind before submitting
-      and decide not to exchange any tiles, you can click <em>Clear</em>.
+      want to exchange, select the tile and then click Trade. When you are ready to end your
+      turn and receive new tiles, click Submit. If you change your mind before submitting
+      and decide not to exchange any tiles, you can click Clear.
     </mat-card-content>
     <mat-card-content>
       <em>Fake words and challenges: </em> Fake words are not automatically blocked. It is each player's

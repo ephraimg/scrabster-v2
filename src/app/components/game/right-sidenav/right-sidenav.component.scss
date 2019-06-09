@@ -59,27 +59,30 @@ h1 {
   overflow-y: auto;
 }
 
-.chat-wrapper::before {
-  background-image: linear-gradient(to top, 
-    rgba(255, 255, 255, 0) 60%,
-    rgba(255, 255, 255, 0.5) 100%);
-  background-image: -moz-linear-gradient(to top, 
-    rgba(255, 255, 255, 0) 60%,
-    rgba(255, 255, 255, 0.5) 100%);
-  background-image: -ms-linear-gradient(to top, 
-    rgba(255, 255, 255, 0) 60%,
-    rgba(255, 255, 255, 0.5) 100%);
-  background-image: -o-linear-gradient(to top, 
-    rgba(255, 255, 255, 0) 60%,
-    rgba(255, 255, 255, 0.5) 100%);
-  background-image: -webkit-linear-gradient(to top, 
-    rgba(255, 255, 255, 0) 60%,
-    rgba(255, 255, 255, 0.5) 100%);
-  content: " ";
-  height: calc(100% - 5rem);
-  position: absolute;
-  width: 100%;
-}
+/* Removed temporarily - what if there's only one
+  message? It appears at top with layer over it.
+*/
+// .chat-wrapper::before {
+//   background-image: linear-gradient(to top, 
+//     rgba(255, 255, 255, 0) 60%,
+//     rgba(255, 255, 255, 0.5) 100%);
+//   background-image: -moz-linear-gradient(to top, 
+//     rgba(255, 255, 255, 0) 60%,
+//     rgba(255, 255, 255, 0.5) 100%);
+//   background-image: -ms-linear-gradient(to top, 
+//     rgba(255, 255, 255, 0) 60%,
+//     rgba(255, 255, 255, 0.5) 100%);
+//   background-image: -o-linear-gradient(to top, 
+//     rgba(255, 255, 255, 0) 60%,
+//     rgba(255, 255, 255, 0.5) 100%);
+//   background-image: -webkit-linear-gradient(to top, 
+//     rgba(255, 255, 255, 0) 60%,
+//     rgba(255, 255, 255, 0.5) 100%);
+//   content: " ";
+//   height: calc(100% - 5rem);
+//   position: absolute;
+//   width: 100%;
+// }
 
 .chat-list {
 }

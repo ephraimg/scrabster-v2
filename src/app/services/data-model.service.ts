@@ -149,9 +149,8 @@ export class DataModelService {
     if (!this.gameOver) {
       throw new Error('Get winner error: Game still in progress!')
     }
-    // winner is whoever is first to have no tiles while bag is empty
-    return this.players.find(player => {
-      return player.rack.length < 1;
+    return this.players.reduce((leader, player) => {
+      return player.score > leader.score ? player : leader;
     });
   }
 

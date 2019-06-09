@@ -61,9 +61,10 @@ export class GameComponent implements OnInit {
   }
 
   get badgeVisible() {
+    if (!this.dms.chatMessages.length) { return false; }
     // Show badge if there's a message more recent than last view by the user
     const lastMessage = this.dms.chatMessages[this.dms.chatMessages.length - 1];
-    const lastMessageDate = lastMessage ? new Date(lastMessage.date) : null;
+    const lastMessageDate = new Date(lastMessage.date);
     return !this.dms.userChatView || this.dms.userChatView < lastMessageDate;
   }
 }

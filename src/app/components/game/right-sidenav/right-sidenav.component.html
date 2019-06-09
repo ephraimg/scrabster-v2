@@ -10,7 +10,7 @@
 <div class="inset-card">
   <h1>Messages</h1>
   <!-- To avoid "Expression has changed after it was checked", only scroll after messages are present -->
-  <div #chatWrapper [scrollTop]="dms.chatMessages ? 0 : chatWrapper.scrollHeight" class="chat-wrapper">
+  <div #chatWrapper [scrollTop]="(!dms.chatMessages || !dms.chatMessages.length) ? 0 : chatWrapper.scrollHeight" class="chat-wrapper">
     <ul class="chat-list">
       <li *ngFor="let chat of dms.chatMessages; index as i" class="chat-item">
         <p *ngIf="i === 0 || dms.chatMessages[i].authorUserId !== dms.chatMessages[i-1].authorUserId" class="chat-info">
